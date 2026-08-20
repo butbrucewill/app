@@ -43,10 +43,14 @@ A dark, high-energy, high-conversion marketing landing site for the "Trading Ke 
 - Kept locked facts (₹30L pool, 40 participants, simulated trading) — did NOT copy reference's "₹1 Crore / real capital" claims.
 - Bug fixed: RiseHeading words were invisible — IntersectionObserver never fired because words were fully clipped by overflow-hidden masks at y:110%; fixed by observing the line wrapper with variants stagger. Gradient text (background-clip:text) failed on composited animated words — accent lines now solid primary red.
 
+### 2026-08-20 iteration 3 — third mentor + real villa photos
+- Third mentor named: Rishabh Mishra (Judge & Risk Coach, Season 01 Mentor tag). Handle/specialty detail not provided — name only, no invented handle.
+- Villa gallery now uses the 2 real uploaded resort photos (aerial villa view + pool deck), saved as optimized /assets/villa-1.webp and villa-2.webp. Stock villa images removed.
+
 ## Placeholders / still needed from user
 - Real organizer email for application alerts (currently placeholder in backend/.env ORGANIZER_EMAIL)
 - Real event date for countdown (currently 2026-12-18 placeholder in frontend/src/constants.js EVENT_DATE)
-- Final mentor/judge names + photos (cards currently "Revealing soon")
+- Mentor handles/specialties for Aman and Rishabh Mishra (names + photos live)
 - Final 18–20 game names/wording (generic category cards for now)
 - Final refund schedule language (policy page marked "subject to final event terms")
 - WhatsApp CTA decision (not built)

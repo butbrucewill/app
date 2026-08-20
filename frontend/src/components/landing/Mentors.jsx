@@ -4,7 +4,7 @@ import { IMAGES } from "@/constants";
 const MENTORS = [
   { img: IMAGES.mentorRajat, name: "Rajat Sharma", handle: "@MrSimpleTrade", role: "Price Action · Options", tag: "Season 01 Mentor", pos: "object-top" },
   { img: IMAGES.mentorAman, name: "Aman", handle: "", role: "Trading Mentor", tag: "Season 01 Mentor", pos: "object-center" },
-  { img: IMAGES.mentorDesk, name: "Trading Mentor", handle: "", role: "Judge & Risk Coach", tag: "Revealing Soon", pos: "object-top" },
+  { img: IMAGES.mentorDesk, name: "Rishabh Mishra", handle: "", role: "Judge & Risk Coach", tag: "Season 01 Mentor", pos: "object-top" },
 ];
 
 export const Mentors = () => (
