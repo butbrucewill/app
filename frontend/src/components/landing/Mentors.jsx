@@ -2,9 +2,30 @@ import { FadeIn, Eyebrow, RiseHeading } from "./FadeIn";
 import { IMAGES } from "@/constants";
 
 const MENTORS = [
-  { img: IMAGES.mentorRajat, name: "Rajat Sharma", handle: "@MrSimpleTrade", role: "Price Action · Options", tag: "Season 01 Mentor", pos: "object-top" },
-  { img: IMAGES.mentorAman, name: "Aman", handle: "", role: "Trading Mentor", tag: "Season 01 Mentor", pos: "object-center" },
-  { img: IMAGES.mentorDesk, name: "Rishabh Mishra", handle: "", role: "Judge & Risk Coach", tag: "Season 01 Mentor", pos: "object-top" },
+  {
+    img: IMAGES.mentorRajat,
+    name: "Rajat Sharma",
+    title: "Founding Director",
+    desc: "Builds and leads One Stock Academy's trading community, translating market moves into content.",
+    tag: "150K+ on Instagram",
+    pos: "object-top",
+  },
+  {
+    img: IMAGES.mentorAman,
+    name: "Aman Singh Negi",
+    title: "Chief Academic Officer",
+    desc: "Leads the online cohort experience, known for breaking down price action and market structure for beginners.",
+    tag: "750K+ on Instagram",
+    pos: "object-center",
+  },
+  {
+    img: IMAGES.mentorDesk,
+    name: "Rishabh Mishra",
+    title: "Founding Director",
+    desc: "SEBI-registered trader and the driving force behind One Stock Academy's curriculum and mentorship philosophy. Leads flagship live sessions and 1:1.",
+    tag: "SEBI Registered",
+    pos: "object-top",
+  },
 ];
 
 export const Mentors = () => (
@@ -28,7 +49,7 @@ export const Mentors = () => (
         {MENTORS.map((m, i) => (
           <FadeIn key={m.name + i} delay={i * 0.1}>
             <article
-              className="group relative h-[420px] overflow-hidden rounded-[2rem] border border-white/10 bg-card sm:h-[480px]"
+              className="group relative h-[480px] overflow-hidden rounded-[2rem] border border-white/10 bg-card sm:h-[540px]"
               data-testid={`mentor-card-${i}`}
             >
               <img
@@ -44,8 +65,8 @@ export const Mentors = () => (
               </div>
               <div className="absolute inset-x-0 bottom-0 p-6">
                 <h3 className="font-display text-3xl uppercase tracking-tight text-white">{m.name}</h3>
-                {m.handle && <p className="mt-1 font-mono text-xs text-white/50">{m.handle}</p>}
-                <p className="mt-2 text-xs uppercase tracking-[0.18em] text-white/70">{m.role}</p>
+                <p className="mt-1 text-xs font-bold uppercase tracking-[0.18em] text-primary">{m.title}</p>
+                <p className="mt-2 text-xs leading-relaxed text-white/60">{m.desc}</p>
               </div>
             </article>
           </FadeIn>

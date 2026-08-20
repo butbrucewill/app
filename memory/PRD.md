@@ -57,10 +57,15 @@ A dark, high-energy, high-conversion marketing landing site for the "Trading Ke 
 ### 2026-08-20 iteration 6 — apply section backdrop
 - Branded TKK banner artwork (challenges-banner.webp) added as dimmed backdrop (25% opacity + radial mask) behind the apply form for a stronger final conversion push. Verified readable on desktop + mobile.
 
+### 2026-08-20 iteration 7 — full mentor details (user-provided)
+- Rajat Sharma — Founding Director; builds/leads One Stock Academy's trading community; 150K+ on Instagram.
+- Aman Singh Negi — Chief Academic Officer; leads online cohort experience, price action & market structure for beginners; 750K+ on Instagram.
+- Rishabh Mishra — Founding Director; SEBI-registered trader, drives One Stock Academy curriculum & mentorship philosophy, leads flagship live sessions and 1:1; "SEBI Registered" tag.
+- Mentor cards now show name + red title + description + follower/registration tag pill.
+
 ## Placeholders / still needed from user
 - Real organizer email for application alerts (currently placeholder in backend/.env ORGANIZER_EMAIL)
 - Real event date for countdown (currently 2026-12-18 placeholder in frontend/src/constants.js EVENT_DATE)
-- Mentor handles/specialties for Aman and Rishabh Mishra (names + photos live)
 - Final 18–20 game names/wording (generic category cards for now)
 - Final refund schedule language (policy page marked "subject to final event terms")
 - WhatsApp CTA decision (not built)
