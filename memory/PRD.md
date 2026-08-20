@@ -63,6 +63,12 @@ A dark, high-energy, high-conversion marketing landing site for the "Trading Ke 
 - Rishabh Mishra — Founding Director; SEBI-registered trader, drives One Stock Academy curriculum & mentorship philosophy, leads flagship live sessions and 1:1; "SEBI Registered" tag.
 - Mentor cards now show name + red title + description + follower/registration tag pill.
 
+### 2026-08-20 iteration 8 — Hostinger deployment fix
+- Diagnosis: user uploaded a frontend build to Hostinger shared hosting (tradingkekhiladi.com) built WITHOUT REACT_APP_BACKEND_URL baked in → form submissions 404'd ("Something went wrong"). Hostinger shared hosting cannot run FastAPI/MongoDB.
+- Fix delivered: production build zip at /app/frontend/tkk-hostinger-upload.zip with backend URL baked in (points to Emergent backend) + public/.htaccess SPA fallback (fixes /admin, /legal/* 404s on Apache).
+- Auth changed cookie-only → JWT Bearer token (login returns token; admin frontend stores in localStorage, sends Authorization header) because third-party cookies are blocked cross-site (Hostinger domain → Emergent backend). Cookie flow still supported by backend.
+- Verified on the exact zipped build served statically: form submit SUCCESS, admin login SUCCESS, dashboard lists applications.
+
 ## Placeholders / still needed from user
 - Real organizer email for application alerts (currently placeholder in backend/.env ORGANIZER_EMAIL)
 - Real event date for countdown (currently 2026-12-18 placeholder in frontend/src/constants.js EVENT_DATE)

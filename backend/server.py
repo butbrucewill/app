@@ -296,7 +296,7 @@ async def login(input: LoginInput, request: Request, response: Response):
         key="access_token", value=token, httponly=True, secure=True,
         samesite="none", max_age=43200, path="/",
     )
-    return {"email": email, "role": "admin", "name": user.get("name", "Admin")}
+    return {"email": email, "role": "admin", "name": user.get("name", "Admin"), "token": token}
 
 
 @api_router.get("/auth/me")

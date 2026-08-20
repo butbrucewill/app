@@ -7,6 +7,11 @@ import { API, formatApiErrorDetail } from "@/constants";
 const inputCls =
   "w-full border border-white/20 bg-black/50 px-4 py-3 text-sm text-white placeholder-white/30 outline-none transition-colors duration-200 focus:border-primary focus:ring-1 focus:ring-primary";
 
+const authHeaders = () => {
+  const token = localStorage.getItem("tkk_admin_token");
+  return token ? { Authorization: `Bearer ${token}` } : {};
+};
+
 export default function AdminPage() {
   const [user, setUser] = useState(null);
   const [email, setEmail] = useState("");
@@ -21,7 +26,7 @@ export default function AdminPage() {
 
   useEffect(() => {
     axios
-      .get(`${API}/auth/me`, { withCredentials: true })
+      .get(`${API}/auth/me`, { headers: authHeaders() })
       .then((res) => setUser(res.data))
       .catch(() => setUser(false));
   }, []);
@@ -31,7 +36,7 @@ export default function AdminPage() {
     try {
       const { data } = await axios.get(`${API}/admin/applications`, {
         params: { search: q },
-        withCredentials: true,
+        headers: authHeaders(),
       });
       setData(data);
     } catch (err) {
@@ -50,11 +55,8 @@ export default function AdminPage() {
     setLoggingIn(true);
     setLoginError("");
     try {
-      const { data } = await axios.post(
-        `${API}/auth/login`,
-        { email, password },
-        { withCredentials: true }
-      );
+      const { data } = await axios.post(`${API}/auth/login`, { email, password });
+      localStorage.setItem("tkk_admin_token", data.token);
       setUser(data);
     } catch (err) {
       setLoginError(formatApiErrorDetail(err.response?.data?.detail));
@@ -64,7 +66,8 @@ export default function AdminPage() {
   };
 
   const handleLogout = async () => {
-    await axios.post(`${API}/auth/logout`, {}, { withCredentials: true }).catch(() => {});
+    await axios.post(`${API}/auth/logout`, {}, { headers: authHeaders() }).catch(() => {});
+    localStorage.removeItem("tkk_admin_token");
     setUser(false);
     setData({ applications: [], total: 0 });
   };
@@ -73,7 +76,7 @@ export default function AdminPage() {
     setExporting(true);
     try {
       const res = await axios.get(`${API}/admin/applications/export`, {
-        withCredentials: true,
+        headers: authHeaders(),
         responseType: "blob",
       });
       const url = URL.createObjectURL(res.data);
