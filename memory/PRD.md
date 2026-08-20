@@ -47,6 +47,10 @@ A dark, high-energy, high-conversion marketing landing site for the "Trading Ke 
 - Third mentor named: Rishabh Mishra (Judge & Risk Coach, Season 01 Mentor tag). Handle/specialty detail not provided — name only, no invented handle.
 - Villa gallery now uses the 2 real uploaded resort photos (aerial villa view + pool deck), saved as optimized /assets/villa-1.webp and villa-2.webp. Stock villa images removed.
 
+### 2026-08-20 iteration 4 — font visibility + branded challenges banner
+- Display font changed Bebas Neue → Anton (heavier condensed; user reported headings "not visible" / too thin on dark bg).
+- Challenges banner image replaced with user's branded TKK tug-of-war artwork (/assets/challenges-banner.webp). Bottom stat strip of the artwork was cropped off because it said "50+ participants / 1 champion" — conflicts with locked facts (40 participants, ₹30L pool, team format). Overlay changed from flat black/50 to bottom gradient so artwork shows through.
+
 ## Placeholders / still needed from user
 - Real organizer email for application alerts (currently placeholder in backend/.env ORGANIZER_EMAIL)
 - Real event date for countdown (currently 2026-12-18 placeholder in frontend/src/constants.js EVENT_DATE)

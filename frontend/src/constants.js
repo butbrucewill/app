@@ -8,7 +8,7 @@ export const IMAGES = {
   hero: "/assets/hero-arena.jpg",
   villa1: "/assets/villa-1.webp",
   villa2: "/assets/villa-2.webp",
-  challenges: "https://images.pexels.com/photos/16966331/pexels-photo-16966331.jpeg?auto=compress&cs=tinysrgb&w=1200",
+  challenges: "/assets/challenges-banner.webp",
   mentorRajat: "/assets/mentor-rajat.webp",
   mentorAman: "/assets/mentor-aman.webp",
   mentorDesk: "/assets/mentor-desk.webp",

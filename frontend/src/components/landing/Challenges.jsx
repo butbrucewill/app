@@ -65,11 +65,11 @@ export const Challenges = () => (
           </FadeIn>
         ))}
         <FadeIn delay={0.35} className="md:col-span-3">
-          <div className="relative h-56 overflow-hidden rounded-2xl border border-white/10 md:h-72">
-            <img src={IMAGES.challenges} alt="Traders competing in the villa" className="h-full w-full object-cover" />
-            <div className="absolute inset-0 bg-black/50" />
+          <div className="relative h-64 overflow-hidden rounded-2xl border border-white/10 md:h-96">
+            <img src={IMAGES.challenges} alt="Trading Ke Khiladi bootcamp at the villa" className="h-full w-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
             <div className="absolute bottom-6 left-6">
-              <p className="font-display text-2xl font-bold uppercase tracking-tight text-white md:text-3xl">
+              <p className="font-display text-2xl uppercase tracking-tight text-white md:text-3xl">
                 The full game list drops with the show trailer
               </p>
             </div>
