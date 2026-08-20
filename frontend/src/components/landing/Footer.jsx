@@ -48,9 +48,6 @@ export const Footer = () => (
           >
             Apply Now
           </a>
-          <p className="mt-4 text-xs text-white/40">
-            Organizers: <a href="/admin" data-testid="footer-admin-link" className="text-white/60 underline hover:text-white">Admin login</a>
-          </p>
         </div>
       </div>
 
