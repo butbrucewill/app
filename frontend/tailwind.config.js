@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        display: ['Anton', 'sans-serif'],
+        display: ['Oswald', 'sans-serif'],
         sans: ['Manrope', 'sans-serif'],
       },
       borderRadius: {

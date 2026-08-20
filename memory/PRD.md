@@ -51,6 +51,12 @@ A dark, high-energy, high-conversion marketing landing site for the "Trading Ke 
 - Display font changed Bebas Neue → Anton (heavier condensed; user reported headings "not visible" / too thin on dark bg).
 - Challenges banner image replaced with user's branded TKK tug-of-war artwork (/assets/challenges-banner.webp). Bottom stat strip of the artwork was cropped off because it said "50+ participants / 1 champion" — conflicts with locked facts (40 participants, ₹30L pool, team format). Overlay changed from flat black/50 to bottom gradient so artwork shows through.
 
+### 2026-08-20 iteration 5 — display font clarity
+- Anton proved too dense ("glowing, not easily visible" per user). Display font now Oswald with a global .font-display rule: weight 600 + 0.03em letter-spacing for clean legibility on the dark theme. Applied globally (headings, day titles, card titles, stat numbers, countdown digits).
+
+### 2026-08-20 iteration 6 — apply section backdrop
+- Branded TKK banner artwork (challenges-banner.webp) added as dimmed backdrop (25% opacity + radial mask) behind the apply form for a stronger final conversion push. Verified readable on desktop + mobile.
+
 ## Placeholders / still needed from user
 - Real organizer email for application alerts (currently placeholder in backend/.env ORGANIZER_EMAIL)
 - Real event date for countdown (currently 2026-12-18 placeholder in frontend/src/constants.js EVENT_DATE)

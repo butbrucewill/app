@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
 import { CheckCircle2, Loader2 } from "lucide-react";
-import { API, formatApiErrorDetail } from "@/constants";
+import { API, formatApiErrorDetail, IMAGES } from "@/constants";
 import { FadeIn, Eyebrow, RiseHeading } from "./FadeIn";
 
 const EXPERIENCE_OPTIONS = [
@@ -53,8 +53,16 @@ export const ApplyForm = () => {
   };
 
   return (
-    <section id="apply" className="relative scroll-mt-36 py-20 sm:py-28">
-      <div className="mx-auto max-w-2xl px-4 sm:px-6">
+    <section id="apply" className="relative scroll-mt-36 overflow-hidden py-20 sm:py-28">
+      <div className="absolute inset-0" aria-hidden="true">
+        <img
+          src={IMAGES.challenges}
+          alt=""
+          className="h-full w-full scale-110 object-cover opacity-25"
+        />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(10,10,10,0.5),#0A0A0A_78%)]" />
+      </div>
+      <div className="relative z-10 mx-auto max-w-2xl px-4 sm:px-6">
         <FadeIn className="text-center">
           <Eyebrow>Applications Open</Eyebrow>
         </FadeIn>

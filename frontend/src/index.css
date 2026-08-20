@@ -102,6 +102,11 @@
     }
 }
 
+.font-display {
+    font-weight: 600;
+    letter-spacing: 0.03em;
+}
+
 @layer base {
     [data-debug-wrapper="true"] {
         display: contents !important;
