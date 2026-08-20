@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        display: ['Oswald', 'sans-serif'],
+        display: ['"Bebas Neue"', 'sans-serif'],
         sans: ['Manrope', 'sans-serif'],
       },
       borderRadius: {
@@ -54,6 +54,8 @@ module.exports = {
           red: '#FF3333',
           black: '#0A0A0A',
         },
+        bull: '#22C55E',
+        bear: '#FF3333',
         chart: {
           '1': 'hsl(var(--chart-1))',
           '2': 'hsl(var(--chart-2))',

@@ -36,6 +36,13 @@ A dark, high-energy, high-conversion marketing landing site for the "Trading Ke 
   - 4 legal pages + footer simulated-trading disclosure
   - Countdown timer (Phase 2 item pulled in early)
 
+### 2026-08-20 iteration 2 — real mentors + reference design match
+- Swapped in 3 real uploaded mentor photos (public/assets/*.webp): Rajat Sharma (@MrSimpleTrade, Price Action · Options — details from user's own reference site), Aman (Trading Mentor), third card "Revealing Soon". Aman's photo was rotated 90° CW to fix orientation; per-card object-position crops.
+- Buniyad copy corrected per user: course is bundled FREE with the ₹3,00,000 participation fee (not tied to winning/selection alone); fee card now lists inclusions.
+- Restyled frontend to match user's reference site (akashnayar.in/lp-r): top stock ticker marquee (NIFTY/RELIANCE etc.), real fist logo (tkk-logo.png) in nav + hero, hero-arena.jpg background, "Season 01 · Applications Open" badge, glass cards, gradient pill CTAs with glow, Bebas Neue display font, word-rise heading animations (framer variants), animated chart-line SVG dividers, grid + red/green radial glow background, rounded-2xl/3xl glass cards throughout.
+- Kept locked facts (₹30L pool, 40 participants, simulated trading) — did NOT copy reference's "₹1 Crore / real capital" claims.
+- Bug fixed: RiseHeading words were invisible — IntersectionObserver never fired because words were fully clipped by overflow-hidden masks at y:110%; fixed by observing the line wrapper with variants stagger. Gradient text (background-clip:text) failed on composited animated words — accent lines now solid primary red.
+
 ## Placeholders / still needed from user
 - Real organizer email for application alerts (currently placeholder in backend/.env ORGANIZER_EMAIL)
 - Real event date for countdown (currently 2026-12-18 placeholder in frontend/src/constants.js EVENT_DATE)

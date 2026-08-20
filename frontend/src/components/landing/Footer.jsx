@@ -1,4 +1,4 @@
-import { Flame } from "lucide-react";
+import { IMAGES } from "@/constants";
 
 const LEGAL = [
   { href: "/legal/terms", label: "Terms & Conditions", id: "terms" },
@@ -12,14 +12,7 @@ export const Footer = () => (
     <div className="mx-auto max-w-7xl px-4 sm:px-6">
       <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
         <div className="max-w-md">
-          <div className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center bg-primary">
-              <Flame className="h-5 w-5 text-white" strokeWidth={2.5} />
-            </span>
-            <span className="font-display text-sm font-bold uppercase tracking-widest text-white">
-              Trading <span className="text-primary">Ke</span> Khiladi
-            </span>
-          </div>
+          <img src={IMAGES.logo} alt="Trading Ke Khiladi" className="h-9 w-auto" />
           <p className="mt-5 text-xs leading-relaxed text-white/40" data-testid="footer-disclaimer">
             Trading Ke Khiladi is an entertainment event built entirely on simulated
             (paper) trading with virtual capital. No real-money trading occurs during

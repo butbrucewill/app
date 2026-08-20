@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from "sonner";
 import { CheckCircle2, Loader2 } from "lucide-react";
 import { API, formatApiErrorDetail } from "@/constants";
-import { FadeIn, Eyebrow } from "./FadeIn";
+import { FadeIn, Eyebrow, RiseHeading } from "./FadeIn";
 
 const EXPERIENCE_OPTIONS = [
   "Just starting out",
@@ -13,7 +13,7 @@ const EXPERIENCE_OPTIONS = [
 ];
 
 const inputCls =
-  "w-full border border-white/20 bg-black/50 px-4 py-3 text-sm text-white placeholder-white/30 outline-none transition-colors duration-200 focus:border-primary focus:ring-1 focus:ring-primary";
+  "w-full rounded-xl border border-white/20 bg-black/50 px-4 py-3 text-sm text-white placeholder-white/30 outline-none transition-colors duration-200 focus:border-primary focus:ring-1 focus:ring-primary";
 
 export const ApplyForm = () => {
   const [form, setForm] = useState({
@@ -53,14 +53,18 @@ export const ApplyForm = () => {
   };
 
   return (
-    <section id="apply" className="scroll-mt-24 border-t border-white/5 py-20 sm:py-28">
+    <section id="apply" className="relative scroll-mt-36 py-20 sm:py-28">
       <div className="mx-auto max-w-2xl px-4 sm:px-6">
         <FadeIn className="text-center">
           <Eyebrow>Applications Open</Eyebrow>
-          <h2 className="mt-4 font-display text-4xl font-bold uppercase tracking-tight text-white sm:text-5xl">
-            Think you're a <span className="text-primary">Khiladi?</span>
-          </h2>
-          <p className="mt-4 text-base leading-relaxed text-white/60 md:text-lg">
+        </FadeIn>
+        <RiseHeading
+          center
+          className="mt-6 font-display text-4xl uppercase leading-[0.95] tracking-tight text-white sm:text-6xl"
+          lines={[{ text: "Think You're A" }, { text: "Khiladi?", accent: true }]}
+        />
+        <FadeIn delay={0.15} className="text-center">
+          <p className="mt-5 text-base leading-relaxed text-white/60 md:text-lg">
             Fill this in. If you make the shortlist, our team calls you for the next
             steps. Only 40 seats exist.
           </p>
@@ -68,7 +72,7 @@ export const ApplyForm = () => {
 
         <FadeIn delay={0.15}>
           {submitted ? (
-            <div className="mt-10 border border-primary/40 bg-card p-10 text-center" data-testid="apply-success">
+            <div className="glass mt-10 rounded-3xl border-primary/40 p-10 text-center" data-testid="apply-success">
               <CheckCircle2 className="mx-auto h-14 w-14 text-primary" strokeWidth={1.5} />
               <h3 className="mt-6 font-display text-2xl font-bold uppercase tracking-tight text-white">
                 Application received
@@ -83,7 +87,7 @@ export const ApplyForm = () => {
               </p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="mt-10 space-y-5 border border-white/10 bg-card p-6 sm:p-10" data-testid="apply-form">
+            <form onSubmit={handleSubmit} className="glass mt-10 space-y-5 rounded-3xl p-6 sm:p-10" data-testid="apply-form">
               <div>
                 <label htmlFor="apply-name" className="mb-2 block text-xs font-bold uppercase tracking-widest text-white/60">Full Name</label>
                 <input id="apply-name" data-testid="apply-name-input" required minLength={2} className={inputCls} placeholder="Your full name" value={form.full_name} onChange={set("full_name")} />
@@ -137,7 +141,7 @@ export const ApplyForm = () => {
                 type="submit"
                 data-testid="apply-submit-btn"
                 disabled={loading}
-                className="flex w-full items-center justify-center gap-2 bg-primary px-8 py-4 font-display text-sm font-bold uppercase tracking-widest text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/30 disabled:cursor-not-allowed disabled:opacity-60"
+                className="btn-gradient glow-red flex w-full items-center justify-center gap-2 rounded-full px-8 py-4 font-display text-sm uppercase tracking-widest text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_60px_-10px_#FF3333] disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {loading && <Loader2 className="h-4 w-4 animate-spin" />}
                 {loading ? "Submitting..." : "Submit Application"}

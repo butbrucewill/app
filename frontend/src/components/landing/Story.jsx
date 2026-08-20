@@ -1,14 +1,16 @@
-import { FadeIn, Eyebrow } from "./FadeIn";
+import { FadeIn, Eyebrow, RiseHeading } from "./FadeIn";
+import { Trophy } from "lucide-react";
 
 export const Story = () => (
-  <section id="story" className="scroll-mt-24 border-t border-white/5 py-20 sm:py-28">
+  <section id="story" className="relative scroll-mt-36 py-20 sm:py-28">
     <div className="mx-auto max-w-7xl px-4 sm:px-6">
       <FadeIn>
-        <Eyebrow>The Show</Eyebrow>
-        <h2 className="mt-4 max-w-3xl font-display text-4xl font-bold uppercase leading-tight tracking-tight text-white sm:text-5xl">
-          Not a course. Not a webinar. <span className="text-primary">A battlefield.</span>
-        </h2>
+        <Eyebrow>What Is It</Eyebrow>
       </FadeIn>
+      <RiseHeading
+        className="mt-6 max-w-3xl font-display text-4xl uppercase leading-[0.95] tracking-tight text-white sm:text-6xl"
+        lines={[{ text: "Not a course. Not a webinar." }, { text: "A battlefield.", accent: true }]}
+      />
       <div className="mt-10 grid gap-10 md:grid-cols-2">
         <FadeIn delay={0.1}>
           <p className="text-base leading-relaxed text-white/70 md:text-lg">
@@ -23,21 +25,35 @@ export const Story = () => (
             prize pool.
           </p>
         </FadeIn>
-        <FadeIn delay={0.2} className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4">
           {[
             { k: "40", v: "Selected participants" },
             { k: "4 × 10", v: "Teams drafted on day one" },
             { k: "18–20", v: "Games & challenges" },
             { k: "₹30L", v: "Prize pool on the line" },
-          ].map((s) => (
-            <div key={s.v} className="border border-white/10 bg-card p-6" data-testid={`story-stat-${s.k}`}>
-              <div className="font-display text-3xl font-bold text-primary">{s.k}</div>
-              <div className="mt-2 text-xs font-semibold uppercase tracking-widest text-white/50">
-                {s.v}
+          ].map((s, i) => (
+            <FadeIn key={s.v} delay={0.2 + i * 0.08}>
+              <div
+                className={`glass rounded-2xl p-6 transition-transform duration-500 hover:-translate-y-1.5 ${i % 2 === 0 ? "float-slow" : ""}`}
+                data-testid={`story-stat-${s.k}`}
+              >
+                <div className="font-display text-4xl text-primary">{s.k}</div>
+                <div className="mt-2 text-xs font-semibold uppercase tracking-widest text-white/50">
+                  {s.v}
+                </div>
               </div>
-            </div>
+            </FadeIn>
           ))}
-        </FadeIn>
+          <FadeIn delay={0.5} className="col-span-2">
+            <div className="glass float-slow flex items-center gap-4 rounded-2xl p-5" data-testid="story-leaderboard-card">
+              <Trophy className="h-6 w-6 shrink-0 text-primary" strokeWidth={1.5} />
+              <p className="text-sm leading-relaxed text-white/70">
+                Ranked every session on P&amp;L, risk and discipline — the leaderboard
+                updates live inside the villa.
+              </p>
+            </div>
+          </FadeIn>
+        </div>
       </div>
     </div>
   </section>

@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, Flame } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import { IMAGES } from "@/constants";
 
 const CONTENT = {
   terms: {
@@ -120,13 +121,8 @@ export default function LegalPage() {
     <div className="min-h-screen bg-[#0A0A0A]">
       <header className="border-b border-white/10 bg-black/60 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-4xl items-center justify-between px-4 sm:px-6">
-          <Link to="/" data-testid="legal-logo" className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center bg-primary">
-              <Flame className="h-5 w-5 text-white" strokeWidth={2.5} />
-            </span>
-            <span className="font-display text-sm font-bold uppercase tracking-widest text-white">
-              Trading <span className="text-primary">Ke</span> Khiladi
-            </span>
+          <Link to="/" data-testid="legal-logo" className="flex items-center">
+            <img src={IMAGES.logo} alt="Trading Ke Khiladi" className="h-8 w-auto" />
           </Link>
           <Link
             to="/"

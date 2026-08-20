@@ -1,4 +1,5 @@
-import { FadeIn, Eyebrow } from "./FadeIn";
+import { FadeIn, Eyebrow, RiseHeading } from "./FadeIn";
+import { Trophy } from "lucide-react";
 
 const DAYS = [
   { day: "Day 1", title: "Arrival & The Draft", desc: "Check in to the villa, meet the mentors, and watch the 4 teams of 10 get drafted live." },
@@ -10,14 +11,15 @@ const DAYS = [
 ];
 
 export const Journey = () => (
-  <section id="journey" className="scroll-mt-24 border-t border-white/5 py-20 sm:py-28">
+  <section id="journey" className="relative scroll-mt-36 py-20 sm:py-28">
     <div className="mx-auto max-w-7xl px-4 sm:px-6">
       <FadeIn>
         <Eyebrow>The Journey</Eyebrow>
-        <h2 className="mt-4 font-display text-4xl font-bold uppercase tracking-tight text-white sm:text-5xl">
-          6 days. <span className="text-primary">Zero mercy.</span>
-        </h2>
       </FadeIn>
+      <RiseHeading
+        className="mt-6 font-display text-4xl uppercase leading-[0.95] tracking-tight text-white sm:text-6xl"
+        lines={[{ text: "6 Days." }, { text: "Zero Mercy.", accent: true }]}
+      />
 
       <div className="mt-14 space-y-0">
         {DAYS.map((d, i) => (

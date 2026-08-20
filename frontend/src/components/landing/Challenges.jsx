@@ -1,4 +1,4 @@
-import { FadeIn, Eyebrow } from "./FadeIn";
+import { FadeIn, Eyebrow, RiseHeading } from "./FadeIn";
 import { IMAGES } from "@/constants";
 import { Crosshair, Gauge, ShieldCheck, Users } from "lucide-react";
 
@@ -30,14 +30,17 @@ const CARDS = [
 ];
 
 export const Challenges = () => (
-  <section id="challenges" className="scroll-mt-24 border-t border-white/5 py-20 sm:py-28">
+  <section id="challenges" className="relative scroll-mt-36 py-20 sm:py-28">
     <div className="mx-auto max-w-7xl px-4 sm:px-6">
       <FadeIn>
-        <Eyebrow>Games & Challenges</Eyebrow>
-        <h2 className="mt-4 font-display text-4xl font-bold uppercase tracking-tight text-white sm:text-5xl">
-          18–20 games. <span className="text-primary">One leaderboard.</span>
-        </h2>
-        <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/60 md:text-lg">
+        <Eyebrow>The Gauntlet</Eyebrow>
+      </FadeIn>
+      <RiseHeading
+        className="mt-6 font-display text-4xl uppercase leading-[0.95] tracking-tight text-white sm:text-6xl"
+        lines={[{ text: "18–20 Games." }, { text: "One Leaderboard.", accent: true }]}
+      />
+      <FadeIn delay={0.15}>
+        <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/60 md:text-lg">
           Every challenge runs on simulated (paper) trading with virtual capital — the
           pressure is real, the market risk is not.
         </p>
@@ -47,7 +50,7 @@ export const Challenges = () => (
         {CARDS.map((c, i) => (
           <FadeIn key={c.title} delay={i * 0.08} className={c.span}>
             <div
-              className="group relative h-full overflow-hidden border border-white/10 bg-card p-8 transition-colors duration-300 hover:border-primary/50"
+              className="group relative h-full overflow-hidden rounded-2xl border border-white/10 bg-card p-8 transition-all duration-500 hover:-translate-y-1.5 hover:border-primary/50"
               data-testid={`challenge-card-${i}`}
             >
               <c.icon className="h-8 w-8 text-primary" strokeWidth={1.5} />
@@ -62,7 +65,7 @@ export const Challenges = () => (
           </FadeIn>
         ))}
         <FadeIn delay={0.35} className="md:col-span-3">
-          <div className="relative h-56 overflow-hidden border border-white/10 md:h-72">
+          <div className="relative h-56 overflow-hidden rounded-2xl border border-white/10 md:h-72">
             <img src={IMAGES.challenges} alt="Traders competing in the villa" className="h-full w-full object-cover" />
             <div className="absolute inset-0 bg-black/50" />
             <div className="absolute bottom-6 left-6">
