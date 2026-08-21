@@ -46,6 +46,12 @@ export const Prizes = () => (
             className="glass group relative h-full overflow-hidden rounded-3xl p-8 transition-transform duration-500 hover:-translate-y-2 sm:p-10"
             data-testid="buniyad-card"
           >
+            <span
+              data-testid="buniyad-free-sticker"
+              className="absolute right-6 top-6 rotate-6 cursor-default rounded-full bg-bull px-4 py-1.5 font-display text-sm uppercase tracking-[0.2em] text-black shadow-[0_0_30px_rgba(34,197,94,0.45)] transition-transform duration-300 hover:rotate-3 hover:scale-110"
+            >
+              100% Free
+            </span>
             <GraduationCap className="h-9 w-9 text-bull" strokeWidth={1.5} />
             <div className="mt-6 font-display text-3xl uppercase tracking-tight text-white sm:text-4xl">
               Buniyad Course
