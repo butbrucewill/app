@@ -65,7 +65,7 @@ export const Challenges = () => (
           </FadeIn>
         ))}
         <FadeIn delay={0.35} className="md:col-span-3">
-          <div className="relative h-64 overflow-hidden rounded-2xl border border-white/10 md:h-96">
+          <div className="relative h-80 overflow-hidden rounded-2xl border border-white/10 sm:h-[440px] md:h-[540px]">
             <img src={IMAGES.challenges} alt="Trading Ke Khiladi bootcamp at the villa" className="h-full w-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
             <div className="absolute bottom-6 left-6">
