@@ -80,6 +80,12 @@ A dark, high-energy, high-conversion marketing landing site for the "Trading Ke 
 - Removed duplicate Gaming Zone nav entry (kept the anchor).
 - Verified on preview: game playable across consecutive rounds (balance updated $1,000 → $1,175.44), form submit SUCCESS, admin login SUCCESS showing 11 applications (new entry reflected instantly). Reported form/admin failures were on the live Hostinger deployment (stale build / sleeping preview backend), not the codebase.
 
+### 2026-08-26 iteration 11 — PHP/MySQL backend for single Hostinger deployment + design elevation
+- Full PHP + MySQL backend in public/api/ (ships inside React build): config.php (DB creds placeholders), db.php (PDO), setup.php (one-time table create + admin seed), applications.php (POST, 18+ check, duplicate 409), admin/ (login.php session auth, me.php, logout.php, applications.php GET+search, export.php CSV), import_csv.php (one-time CSV import from old panel). No email alerts (user choice).
+- .htaccess: clean-path rewrites (/api/applications → api/applications.php etc.) + SPA fallback. Frontend API switched to same-origin "/api" — works on Emergent preview (FastAPI) AND Hostinger (PHP) with zero env vars needed. REACT_APP_BACKEND_URL no longer required.
+- Design elevation: kinetic hero (logo wipe reveal via clip-path, masked line-by-line headline, scroll parallax on bg, content fade on scroll), numbered manifesto chapter badges (01–07), slow editorial marquee bands (outline text) after hero and before apply form, clipped red offset frames on villa photography.
+- Verified on preview: hero animation, marquee, form submit via /api, admin login (12 applications), all PHP files present in build.
+
 ## Placeholders / still needed from user
 - Real organizer email for application alerts (currently placeholder in backend/.env ORGANIZER_EMAIL)
 - Real event date for countdown (currently 2026-12-18 placeholder in frontend/src/constants.js EVENT_DATE)

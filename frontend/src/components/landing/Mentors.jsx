@@ -32,7 +32,7 @@ export const Mentors = () => (
   <section id="mentors" className="relative scroll-mt-36 py-20 sm:py-28">
     <div className="mx-auto max-w-7xl px-4 sm:px-6">
       <FadeIn>
-        <Eyebrow>The Faculty</Eyebrow>
+        <Eyebrow num="04">The Faculty</Eyebrow>
       </FadeIn>
       <RiseHeading
         className="mt-6 font-display text-4xl uppercase leading-[0.95] tracking-tight text-white sm:text-6xl"

@@ -96,8 +96,21 @@
     50% { transform: translateY(-10px); }
 }
 
+.marquee-slow {
+    animation: marquee-slow 46s linear infinite;
+}
+@keyframes marquee-slow {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+.text-outline {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.22);
+}
+
 @media (prefers-reduced-motion: reduce) {
-    .marquee-track, .pulse-trade, .float-slow {
+    .marquee-track, .pulse-trade, .float-slow, .marquee-slow {
         animation: none;
     }
 }

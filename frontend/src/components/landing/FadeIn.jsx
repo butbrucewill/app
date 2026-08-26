@@ -13,9 +13,10 @@ export const FadeIn = ({ children, delay = 0, className = "" }) => (
   </motion.div>
 );
 
-export const Eyebrow = ({ children }) => (
+export const Eyebrow = ({ children, num }) => (
   <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.28em] text-primary">
     <span className="pulse-trade h-1.5 w-1.5 rounded-full bg-primary" />
+    {num && <span className="font-display text-sm tracking-widest text-white/70">{num}</span>}
     {children}
   </span>
 );

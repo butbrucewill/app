@@ -12,7 +12,7 @@ export const Prizes = () => (
   <section id="prizes" className="relative scroll-mt-36 py-20 sm:py-28">
     <div className="mx-auto max-w-7xl px-4 sm:px-6">
       <FadeIn>
-        <Eyebrow>What's At Stake</Eyebrow>
+        <Eyebrow num="06">What's At Stake</Eyebrow>
       </FadeIn>
       <RiseHeading
         className="mt-6 font-display text-4xl uppercase leading-[0.95] tracking-tight text-white sm:text-6xl"

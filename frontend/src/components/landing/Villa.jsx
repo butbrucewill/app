@@ -6,7 +6,7 @@ export const Villa = () => (
   <section id="villa" className="relative scroll-mt-36 py-20 sm:py-28">
     <div className="mx-auto max-w-7xl px-4 sm:px-6">
       <FadeIn>
-        <Eyebrow>The Villa</Eyebrow>
+        <Eyebrow num="05">The Villa</Eyebrow>
       </FadeIn>
       <RiseHeading
         className="mt-6 font-display text-4xl uppercase leading-[0.95] tracking-tight text-white sm:text-6xl"
@@ -22,16 +22,22 @@ export const Villa = () => (
 
       <div className="mt-12 grid gap-4 md:grid-cols-5">
         <FadeIn className="md:col-span-3">
-          <div className="relative h-72 overflow-hidden rounded-2xl border border-white/10 md:h-[420px]">
-            <img src={IMAGES.villa1} alt="Luxury villa resort pool in Thailand" className="h-full w-full object-cover" />
-            <div className="absolute bottom-4 left-4 flex items-center gap-2 bg-black/70 px-3 py-2 text-xs font-semibold uppercase tracking-widest text-white backdrop-blur-md">
-              <MapPin className="h-3.5 w-3.5 text-primary" /> Thailand Villa Resort
+          <div className="relative">
+            <div className="absolute inset-0 translate-x-3 translate-y-3 rounded-2xl border border-primary/40" aria-hidden="true" />
+            <div className="relative h-72 overflow-hidden rounded-2xl border border-white/10 md:h-[420px]">
+              <img src={IMAGES.villa1} alt="Luxury villa resort pool in Thailand" className="h-full w-full object-cover" />
+              <div className="absolute bottom-4 left-4 flex items-center gap-2 bg-black/70 px-3 py-2 text-xs font-semibold uppercase tracking-widest text-white backdrop-blur-md">
+                <MapPin className="h-3.5 w-3.5 text-primary" /> Thailand Villa Resort
+              </div>
             </div>
           </div>
         </FadeIn>
         <FadeIn delay={0.1} className="md:col-span-2">
-          <div className="relative h-72 overflow-hidden rounded-2xl border border-white/10 md:h-[420px]">
-            <img src={IMAGES.villa2} alt="Resort interiors" className="h-full w-full object-cover" />
+          <div className="relative">
+            <div className="absolute inset-0 -translate-x-3 translate-y-3 rounded-2xl border border-primary/40" aria-hidden="true" />
+            <div className="relative h-72 overflow-hidden rounded-2xl border border-white/10 md:h-[420px]">
+              <img src={IMAGES.villa2} alt="Resort interiors" className="h-full w-full object-cover" />
+            </div>
           </div>
         </FadeIn>
       </div>

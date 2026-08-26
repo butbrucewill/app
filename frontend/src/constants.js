@@ -1,4 +1,4 @@
-export const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
+export const API = "/api";
 
 // PLACEHOLDER event date — update once the final event date is locked.
 export const EVENT_DATE = new Date("2026-12-18T10:00:00+05:30");

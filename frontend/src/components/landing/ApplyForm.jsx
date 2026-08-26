@@ -64,7 +64,7 @@ export const ApplyForm = () => {
       </div>
       <div className="relative z-10 mx-auto max-w-2xl px-4 sm:px-6">
         <FadeIn className="text-center">
-          <Eyebrow>Applications Open</Eyebrow>
+          <Eyebrow num="07">Applications Open</Eyebrow>
         </FadeIn>
         <RiseHeading
           center

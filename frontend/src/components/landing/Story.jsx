@@ -5,7 +5,7 @@ export const Story = () => (
   <section id="story" className="relative scroll-mt-36 py-20 sm:py-28">
     <div className="mx-auto max-w-7xl px-4 sm:px-6">
       <FadeIn>
-        <Eyebrow>What Is It</Eyebrow>
+        <Eyebrow num="01">What Is It</Eyebrow>
       </FadeIn>
       <RiseHeading
         className="mt-6 max-w-3xl font-display text-4xl uppercase leading-[0.95] tracking-tight text-white sm:text-6xl"

@@ -14,7 +14,7 @@ export const Journey = () => (
   <section id="journey" className="relative scroll-mt-36 py-20 sm:py-28">
     <div className="mx-auto max-w-7xl px-4 sm:px-6">
       <FadeIn>
-        <Eyebrow>The Journey</Eyebrow>
+        <Eyebrow num="02">The Journey</Eyebrow>
       </FadeIn>
       <RiseHeading
         className="mt-6 font-display text-4xl uppercase leading-[0.95] tracking-tight text-white sm:text-6xl"

@@ -3,6 +3,7 @@ import Lenis from "lenis";
 import { Ticker } from "@/components/landing/Ticker";
 import { Navbar } from "@/components/landing/Navbar";
 import { Hero } from "@/components/landing/Hero";
+import { EditorialMarquee } from "@/components/landing/EditorialMarquee";
 import { Story } from "@/components/landing/Story";
 import { Journey } from "@/components/landing/Journey";
 import { Challenges } from "@/components/landing/Challenges";
@@ -31,6 +32,7 @@ export default function LandingPage() {
       </div>
       <main className="relative z-10">
         <Hero />
+        <EditorialMarquee />
         <Story />
         <ChartDivider />
         <Journey />
@@ -40,6 +42,7 @@ export default function LandingPage() {
         <Mentors />
         <Villa />
         <Prizes />
+        <EditorialMarquee />
         <ApplyForm />
         <Footer />
       </main>

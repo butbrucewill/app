@@ -33,7 +33,7 @@ export const Challenges = () => (
   <section id="challenges" className="relative scroll-mt-36 py-20 sm:py-28">
     <div className="mx-auto max-w-7xl px-4 sm:px-6">
       <FadeIn>
-        <Eyebrow>The Gauntlet</Eyebrow>
+        <Eyebrow num="03">The Gauntlet</Eyebrow>
       </FadeIn>
       <RiseHeading
         className="mt-6 font-display text-4xl uppercase leading-[0.95] tracking-tight text-white sm:text-6xl"
