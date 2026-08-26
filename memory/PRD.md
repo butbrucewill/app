@@ -93,6 +93,11 @@ A dark, high-energy, high-conversion marketing landing site for the "Trading Ke 
 - PHP: api/game/score.php + api/admin/game_scores.php + game_scores table in setup.php; .htaccess rewrites added. FastAPI mirror endpoints for preview parity.
 - Verified full chain on preview: applied as "Gamer Test" → continued to /gamingzone → won a round ($1,175.66) → admin Game Scores tab showed the row instantly. 13 applications total.
 
+### 2026-08-26 iteration 13 — gaming gate flow (user-requested redesign)
+- New flow: nav "Gaming Zone" → /gamingzone gate page ("Want to Play?" + application form embedded) → on submit, game unlocks in place ("Playing as {name}" strip). Repeat visitors with tkk_player in localStorage skip the gate.
+- Application form extracted to shared src/components/ApplicationForm.jsx (used by landing ApplyForm section AND gaming gate). Homepage embedded game section removed (game lives on its own page now). Nav Gaming Zone link now routes to /gamingzone.
+- Verified: gate → submit → unlock → timer ticking (9→7), chart drawing, patterns cycle (Ascending Triangle → Double Top), win/lose results, admin Game Scores rows for each player.
+
 ## Placeholders / still needed from user
 - Real organizer email for application alerts (currently placeholder in backend/.env ORGANIZER_EMAIL)
 - Real event date for countdown (currently 2026-12-18 placeholder in frontend/src/constants.js EVENT_DATE)

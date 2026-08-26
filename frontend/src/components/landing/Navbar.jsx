@@ -6,7 +6,7 @@ const LINKS = [
   { href: "#story", label: "The Show" },
   { href: "#journey", label: "Journey" },
   { href: "#challenges", label: "Challenges" },
-  { href: "#gamingzone", label: "Gaming Zone" },
+  { href: "/gamingzone", label: "Gaming Zone" },
   { href: "#mentors", label: "Mentors" },
   { href: "#villa", label: "The Villa" },
   { href: "#prizes", label: "Prizes" },

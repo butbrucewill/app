@@ -13,7 +13,6 @@ import { Prizes } from "@/components/landing/Prizes";
 import { ApplyForm } from "@/components/landing/ApplyForm";
 import { Footer } from "@/components/landing/Footer";
 import { ChartDivider } from "@/components/landing/FadeIn";
-import { GamingZone } from "@/components/landing/GamingZone";
 
 export default function LandingPage() {
   useEffect(() => {
@@ -37,7 +36,6 @@ export default function LandingPage() {
         <ChartDivider />
         <Journey />
         <Challenges />
-        <GamingZone />
         <ChartDivider />
         <Mentors />
         <Villa />
