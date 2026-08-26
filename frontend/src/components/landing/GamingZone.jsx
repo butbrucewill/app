@@ -1,5 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import { IMAGES } from "@/constants";
+import { API, IMAGES } from "@/constants";
+
+const postScore = (payload) => {
+  try {
+    fetch(`${API}/game/score`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    }).catch(() => {});
+  } catch (e) {}
+};
 
 const PATTERNS = [
   { label: "Ascending Triangle", bias: 0.74, pivots: [[0, 0], [0.12, 10], [0.28, 3], [0.42, 10], [0.58, 5.5], [0.72, 10], [0.85, 7], [1, 9]], note: "Flat resistance plus rising lows usually resolves upward." },
@@ -49,6 +59,7 @@ export function GamingZone() {
   const [result, setResult] = useState(null);
   const [focus, setFocus] = useState(false);
   const [timeframe, setTimeframe] = useState("1M");
+  const winsRef = useRef(0);
 
   const draw = () => {
     const canvas = canvasRef.current;
@@ -77,6 +88,20 @@ export function GamingZone() {
     const net = direction && correct ? bet * (multiplier - 1) : -bet;
     const nextStreak = direction && correct ? streak + 1 : 0;
     setBalance((value) => Math.max(0, value + net)); setRound((value) => value + 1); setStreak(nextStreak); setBest((value) => Math.max(value, nextStreak));
+    if (direction && correct) winsRef.current += 1;
+    let player = null;
+    try { player = JSON.parse(localStorage.getItem("tkk_player") || "null"); } catch (e) {}
+    let guestKey = localStorage.getItem("tkk_guest");
+    if (!guestKey) { guestKey = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : "g" + Date.now(); localStorage.setItem("tkk_guest", guestKey); }
+    postScore({
+      player_key: (player && player.key) || guestKey,
+      player_name: (player && player.name) || "Guest Khiladi",
+      player_email: (player && player.email) || "",
+      rounds: round + 1,
+      wins: winsRef.current,
+      balance: Math.max(0, balance + net),
+      best_streak: Math.max(best, nextStreak),
+    });
     let revealed = 32; clearInterval(revealRef.current); revealRef.current = setInterval(() => { revealed += 1; setGame((current) => current ? { ...current, display: current.all.slice(0, Math.min(revealed, current.all.length)) } : current); if (revealed >= game.all.length) { clearInterval(revealRef.current); setActive(false); setResult({ win: Boolean(direction && correct), title: direction === null ? "Bell rang - too slow" : correct ? multiplier >= 2.2 ? "Lightning call" : "Correct call" : "Wrong side", text: `${game.pattern.label} actually broke ${game.goesUp ? "UP" : "DOWN"}. You called ${direction || "no call"}. ${direction && correct ? `Profit: ${money(net)} (${multiplier.toFixed(1)}x).` : `Lost stake: ${money(bet)}.`} ${game.pattern.note}` }); } }, 55);
   };
 

@@ -340,6 +340,31 @@ async def export_applications(admin=Depends(get_current_admin)):
     )
 
 
+# ---------------- Game scores ----------------
+class GameScoreInput(BaseModel):
+    player_key: str = Field(min_length=1, max_length=64)
+    player_name: str = Field(default="Guest Khiladi", max_length=120)
+    player_email: str = Field(default="", max_length=120)
+    rounds: int = 0
+    wins: int = 0
+    balance: float = 1000
+    best_streak: int = 0
+
+
+@api_router.post("/game/score")
+async def save_game_score(input: GameScoreInput):
+    doc = input.model_dump()
+    doc["updated_at"] = datetime.now(timezone.utc).isoformat()
+    await db.game_scores.update_one({"player_key": input.player_key}, {"$set": doc}, upsert=True)
+    return {"status": "saved"}
+
+
+@api_router.get("/admin/game-scores")
+async def list_game_scores(admin=Depends(get_current_admin)):
+    scores = await db.game_scores.find({}, {"_id": 0}).sort([("best_streak", -1), ("balance", -1)]).to_list(2000)
+    return {"scores": scores, "total": len(scores)}
+
+
 # ---------------- Startup ----------------
 @app.on_event("startup")
 async def startup():
@@ -347,6 +372,7 @@ async def startup():
     await db.login_attempts.create_index("identifier")
     await db.applications.create_index("email")
     await db.applications.create_index("created_at")
+    await db.game_scores.create_index("player_key", unique=True)
 
     admin_email = os.environ.get("ADMIN_EMAIL", "").lower()
     admin_password = os.environ.get("ADMIN_PASSWORD", "")

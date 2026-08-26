@@ -19,6 +19,17 @@ try {
         INDEX(created_at)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
 
+    $pdo->exec("CREATE TABLE IF NOT EXISTS game_scores (
+        player_key VARCHAR(64) PRIMARY KEY,
+        player_name VARCHAR(120) NOT NULL DEFAULT 'Guest Khiladi',
+        player_email VARCHAR(120) NOT NULL DEFAULT '',
+        rounds INT NOT NULL DEFAULT 0,
+        wins INT NOT NULL DEFAULT 0,
+        balance DECIMAL(12,2) NOT NULL DEFAULT 1000,
+        best_streak INT NOT NULL DEFAULT 0,
+        updated_at VARCHAR(40) NOT NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+
     $pdo->exec("CREATE TABLE IF NOT EXISTS admins (
         id INT AUTO_INCREMENT PRIMARY KEY,
         email VARCHAR(120) UNIQUE NOT NULL,

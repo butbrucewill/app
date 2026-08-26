@@ -86,6 +86,13 @@ A dark, high-energy, high-conversion marketing landing site for the "Trading Ke 
 - Design elevation: kinetic hero (logo wipe reveal via clip-path, masked line-by-line headline, scroll parallax on bg, content fade on scroll), numbered manifesto chapter badges (01–07), slow editorial marquee bands (outline text) after hero and before apply form, clipped red offset frames on villa photography.
 - Verified on preview: hero animation, marquee, form submit via /api, admin login (12 applications), all PHP files present in build.
 
+### 2026-08-26 iteration 12 — apply → play → admin loop
+- Apply success panel now has "Continue to Gaming Zone" button; applicant identity (id/name/email) saved to localStorage as tkk_player.
+- Both game versions (embedded React port + standalone gaming-zone.html) post session scores after every round to /api/game/score (upsert by player key; guests get a persistent guest id).
+- Admin dashboard now has tabs: Applications | Game Scores (player, email, rounds, wins, best streak, balance, last played).
+- PHP: api/game/score.php + api/admin/game_scores.php + game_scores table in setup.php; .htaccess rewrites added. FastAPI mirror endpoints for preview parity.
+- Verified full chain on preview: applied as "Gamer Test" → continued to /gamingzone → won a round ($1,175.66) → admin Game Scores tab showed the row instantly. 13 applications total.
+
 ## Placeholders / still needed from user
 - Real organizer email for application alerts (currently placeholder in backend/.env ORGANIZER_EMAIL)
 - Real event date for countdown (currently 2026-12-18 placeholder in frontend/src/constants.js EVENT_DATE)

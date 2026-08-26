@@ -669,7 +669,7 @@
   `).join('');
 
   // ---------- game state ----------
-  let balance=1000, bet=100, round=0, streak=0, best=0, active=false;
+  let balance=1000, bet=100, round=0, streak=0, best=0, active=false, wins=0;
   let pattern=null, goesUp=false, allCloses=[], allCandles=[], displayCandles=[], contCandles=[];
   let splitIndex=0, globalMin=0, globalMax=0, timerInt=null, revealInt=null, roundStartTime=0;
   const SETUP_N=32, CONT_N=11, TOTAL_MS=10000;
@@ -758,7 +758,7 @@
     const correct = dir ? ((dir==='up')===goesUp) : false;
     round++;
     let net;
-    if(dir && correct){ net = bet*(mult-1); balance += net; streak++; best=Math.max(best,streak); }
+    if(dir && correct){ net = bet*(mult-1); balance += net; streak++; wins++; best=Math.max(best,streak); }
     else { net = -bet; balance = Math.max(0, balance+net); streak=0; }
     updateStats();
     playReveal(()=>{
@@ -777,6 +777,19 @@
       btnStart.disabled = balance<=0;
       btnStart.style.display='inline-block';
       $$('.paddles button', $('#betPaddles')).forEach(c=>c.disabled=false);
+      try {
+        var __p = JSON.parse(localStorage.getItem('tkk_player') || 'null');
+        if (!__p) {
+          var __k = localStorage.getItem('tkk_guest');
+          if (!__k) { __k = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : 'g' + Date.now(); localStorage.setItem('tkk_guest', __k); }
+          __p = { key: __k, name: 'Guest Khiladi', email: '' };
+        }
+        fetch('/api/game/score', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ player_key: __p.key, player_name: __p.name, player_email: __p.email || '', rounds: round, wins: wins, balance: balance, best_streak: best })
+        }).catch(function(){});
+      } catch (e) {}
     });
   }
 

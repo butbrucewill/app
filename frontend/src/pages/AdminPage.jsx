@@ -50,6 +50,26 @@ export default function AdminPage() {
     if (user) fetchApplications();
   }, [user, fetchApplications]);
 
+  const [tab, setTab] = useState("apps");
+  const [scores, setScores] = useState([]);
+  const [loadingScores, setLoadingScores] = useState(false);
+
+  const fetchScores = useCallback(async () => {
+    setLoadingScores(true);
+    try {
+      const { data } = await axios.get(`${API}/admin/game-scores`, { headers: authHeaders() });
+      setScores(data.scores || []);
+    } catch (err) {
+      toast.error(formatApiErrorDetail(err.response?.data?.detail));
+    } finally {
+      setLoadingScores(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (user && tab === "games") fetchScores();
+  }, [user, tab, fetchScores]);
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoggingIn(true);
@@ -215,7 +235,63 @@ export default function AdminPage() {
           </div>
         </div>
 
-        <div className="mt-8 overflow-x-auto border border-white/10" data-testid="admin-applications-table">
+        <div className="mt-8 flex gap-3">
+          <button
+            data-testid="admin-tab-applications"
+            onClick={() => setTab("apps")}
+            className={`rounded-full px-5 py-2 text-xs font-bold uppercase tracking-widest transition-colors duration-200 ${tab === "apps" ? "bg-primary text-white" : "border border-white/20 text-white/60 hover:text-white"}`}
+          >
+            Applications
+          </button>
+          <button
+            data-testid="admin-tab-games"
+            onClick={() => setTab("games")}
+            className={`rounded-full px-5 py-2 text-xs font-bold uppercase tracking-widest transition-colors duration-200 ${tab === "games" ? "bg-primary text-white" : "border border-white/20 text-white/60 hover:text-white"}`}
+          >
+            Game Scores
+          </button>
+        </div>
+
+        {tab === "games" ? (
+          <div className="mt-4 overflow-x-auto border border-white/10" data-testid="admin-games-table">
+            <table className="w-full min-w-[800px] text-left text-sm">
+              <thead>
+                <tr className="border-b border-white/10 bg-white/[0.03] text-xs uppercase tracking-widest text-white/50">
+                  <th className="px-4 py-3">Player</th>
+                  <th className="px-4 py-3">Email</th>
+                  <th className="px-4 py-3">Rounds</th>
+                  <th className="px-4 py-3">Wins</th>
+                  <th className="px-4 py-3">Best Streak</th>
+                  <th className="px-4 py-3">Balance</th>
+                  <th className="px-4 py-3">Last Played</th>
+                </tr>
+              </thead>
+              <tbody>
+                {scores.length === 0 && (
+                  <tr>
+                    <td colSpan={7} className="px-4 py-12 text-center text-white/40" data-testid="admin-games-empty">
+                      {loadingScores ? "Loading..." : "No games played yet."}
+                    </td>
+                  </tr>
+                )}
+                {scores.map((s) => (
+                  <tr key={s.player_key} className="border-b border-white/5 text-white/80 transition-colors duration-150 hover:bg-white/[0.03]" data-testid={`game-row-${s.player_key}`}>
+                    <td className="px-4 py-3 font-semibold text-white">{s.player_name}</td>
+                    <td className="px-4 py-3">{s.player_email || "—"}</td>
+                    <td className="px-4 py-3">{s.rounds}</td>
+                    <td className="px-4 py-3 text-bull">{s.wins}</td>
+                    <td className="px-4 py-3">{s.best_streak}</td>
+                    <td className="px-4 py-3">${Number(s.balance).toLocaleString()}</td>
+                    <td className="px-4 py-3 text-white/50">
+                      {s.updated_at ? new Date(s.updated_at).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" }) : "—"}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+        <div className="mt-4 overflow-x-auto border border-white/10" data-testid="admin-applications-table">
           <table className="w-full min-w-[900px] text-left text-sm">
             <thead>
               <tr className="border-b border-white/10 bg-white/[0.03] text-xs uppercase tracking-widest text-white/50">
@@ -258,6 +334,7 @@ export default function AdminPage() {
             </tbody>
           </table>
         </div>
+        )}
       </main>
     </div>
   );

@@ -4,6 +4,8 @@
 
   # Clean API paths -> PHP endpoints
   RewriteRule ^api/applications$ api/applications.php [L]
+  RewriteRule ^api/game/score$ api/game/score.php [L]
+  RewriteRule ^api/admin/game-scores$ api/admin/game_scores.php [L]
   RewriteRule ^api/auth/login$ api/admin/login.php [L]
   RewriteRule ^api/auth/me$ api/admin/me.php [L]
   RewriteRule ^api/auth/logout$ api/admin/logout.php [L]

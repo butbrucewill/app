@@ -39,6 +39,7 @@ export const ApplyForm = () => {
     setLoading(true);
     try {
       const { data } = await axios.post(`${API}/applications`, form);
+      localStorage.setItem("tkk_player", JSON.stringify({ key: data.id, name: form.full_name, email: form.email }));
       setSubmitted(data);
     } catch (err) {
       const msg = formatApiErrorDetail(err.response?.data?.detail);
@@ -93,6 +94,13 @@ export const ApplyForm = () => {
               <p className="mt-5 text-xs uppercase tracking-widest text-white/40">
                 Application ID: <span className="text-white/70">{submitted.id}</span>
               </p>
+              <a
+                href="/gamingzone"
+                data-testid="apply-play-btn"
+                className="btn-gradient glow-red mt-7 inline-flex items-center gap-2 rounded-full px-7 py-3.5 font-display text-sm uppercase tracking-widest text-white transition-all duration-300 hover:-translate-y-0.5"
+              >
+                Continue to Gaming Zone
+              </a>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="glass mt-10 space-y-5 rounded-3xl p-6 sm:p-10" data-testid="apply-form">
