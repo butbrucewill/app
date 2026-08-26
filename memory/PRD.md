@@ -69,6 +69,11 @@ A dark, high-energy, high-conversion marketing landing site for the "Trading Ke 
 - Auth changed cookie-only → JWT Bearer token (login returns token; admin frontend stores in localStorage, sends Authorization header) because third-party cookies are blocked cross-site (Hostinger domain → Emergent backend). Cookie flow still supported by backend.
 - Verified on the exact zipped build served statically: form submit SUCCESS, admin login SUCCESS, dashboard lists applications.
 
+### 2026-08-26 iteration 9 — Gaming Zone page
+- New /gamingzone route: embeds user's self-contained "Pattern Pit — Call It" trading-pattern game (public/gaming-zone.html) in a branded page (logo header, Back to site). Game text rebranded: title + eyebrow "Trading Ke Khiladi · Gaming Zone".
+- "Gaming Zone" nav link added (red accent) on desktop + mobile.
+- Fixed a user-side edit in App.js that imported GamingZone from a non-existent path (would have broken the build).
+
 ## Placeholders / still needed from user
 - Real organizer email for application alerts (currently placeholder in backend/.env ORGANIZER_EMAIL)
 - Real event date for countdown (currently 2026-12-18 placeholder in frontend/src/constants.js EVENT_DATE)

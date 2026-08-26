@@ -4,7 +4,7 @@ import { Toaster } from "sonner";
 import LandingPage from "@/pages/LandingPage";
 import AdminPage from "@/pages/AdminPage";
 import LegalPage from "@/pages/LegalPage";
-import GamingZone from "@/components/landing/GamingZone";
+import GamingZone from "@/pages/GamingZone";
 
 function App() {
   return (
