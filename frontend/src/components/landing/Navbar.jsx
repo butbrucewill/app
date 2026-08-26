@@ -34,13 +34,6 @@ export const Navbar = () => {
                 {l.label}
               </a>
             ))}
-            <a
-              href="/gamingzone"
-              data-testid="nav-link-gaming-zone"
-              className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary transition-colors duration-200 hover:text-white"
-            >
-              Gaming Zone
-            </a>
           </div>
 
           <div className="flex items-center gap-3">

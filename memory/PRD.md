@@ -74,6 +74,12 @@ A dark, high-energy, high-conversion marketing landing site for the "Trading Ke 
 - "Gaming Zone" nav link added (red accent) on desktop + mobile.
 - Fixed a user-side edit in App.js that imported GamingZone from a non-existent path (would have broken the build).
 
+### 2026-08-26 iteration 10 — game branding + bug fixes + regression check
+- User had embedded a React port of the game into the landing page (components/landing/GamingZone.jsx) with its own CSS in App.css. Fixed two game-breaking bugs: start button disabled forever after round 1 (now disabled only while a round is live), and paddles clickable after a round ended (now guarded by active state).
+- Rebranded BOTH game versions to TKK theme: brass/gold → Electric Red #FF3333, chalk → white, bg → #0A0A0A, Space Grotesk → Oswald, TKK fist logo added to game headers, eyebrow "Trading Ke Khiladi · Gaming Zone". Standalone (public/gaming-zone.html) and embedded React port both updated. IBM Plex Mono added to index.html fonts.
+- Removed duplicate Gaming Zone nav entry (kept the anchor).
+- Verified on preview: game playable across consecutive rounds (balance updated $1,000 → $1,175.44), form submit SUCCESS, admin login SUCCESS showing 11 applications (new entry reflected instantly). Reported form/admin failures were on the live Hostinger deployment (stale build / sleeping preview backend), not the codebase.
+
 ## Placeholders / still needed from user
 - Real organizer email for application alerts (currently placeholder in backend/.env ORGANIZER_EMAIL)
 - Real event date for countdown (currently 2026-12-18 placeholder in frontend/src/constants.js EVENT_DATE)

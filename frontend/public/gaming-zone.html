@@ -5,22 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pattern Pit — Trading Ke Khiladi Gaming Zone</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0F0D0A;
-    --panel:#1B1712;
-    --panel-2:#211C15;
-    --brass:#C9A24B;
-    --brass-dim:#7C6530;
-    --brass-bright:#E7C368;
-    --chalk:#EDE7D8;
-    --chalk-dim:#A69C87;
+    --bg:#0A0A0A;
+    --panel:#141414;
+    --panel-2:#1B1B1B;
+    --brass:#FF3333;
+    --brass-dim:#B32828;
+    --brass-bright:#FF6B6B;
+    --chalk:#FFFFFF;
+    --chalk-dim:#A3A3A3;
     --up:#4FBE68;
     --up-muted:#3E6B47;
     --down:#E0564B;
     --down-muted:#8B4A43;
-    --line: rgba(201,162,75,0.16);
+    --line: rgba(255,51,51,0.16);
     --shadow: rgba(0,0,0,0.55);
   }
   *{box-sizing:border-box;}
@@ -28,7 +28,7 @@
   body{
     min-height:100vh;
     background:
-      radial-gradient(ellipse 900px 500px at 50% -8%, rgba(201,162,75,0.10), transparent 60%),
+      radial-gradient(ellipse 900px 500px at 50% -8%, rgba(255,51,51,0.10), transparent 60%),
       var(--bg);
     color:var(--chalk);
     font-family:'IBM Plex Mono', monospace;
@@ -53,7 +53,7 @@
   }
   .rivet{
     position:absolute; width:7px; height:7px; border-radius:50%;
-    background:radial-gradient(circle at 35% 30%, #F3D98F, var(--brass-dim) 72%);
+    background:radial-gradient(circle at 35% 30%, #FF8080, var(--brass-dim) 72%);
     box-shadow:0 1px 2px rgba(0,0,0,.5);
   }
   .rivet.tl{top:11px;left:11px;} .rivet.tr{top:11px;right:11px;}
@@ -65,7 +65,7 @@
     color:var(--brass-dim); margin-bottom:10px; font-weight:500;
   }
   h1{
-    font-family:'Space Grotesk', sans-serif; font-weight:700;
+    font-family:'Oswald', sans-serif; font-weight:700;
     font-size:34px; letter-spacing:.01em; margin:0 0 9px; color:var(--chalk);
   }
   .sub{
@@ -104,7 +104,7 @@
   }
   .paddles button.active{
     border-color:var(--brass); color:var(--brass-bright);
-    background:rgba(201,162,75,0.10);
+    background:rgba(255,51,51,0.10);
   }
   .paddles button:disabled{opacity:.4; cursor:not-allowed;}
 
@@ -117,7 +117,7 @@
     font-size:10.5px; letter-spacing:.1em; color:var(--brass-dim); flex:none;
   }
   .np-pattern{
-    font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:13.5px;
+    font-family:'Oswald', sans-serif; font-weight:700; font-size:13.5px;
     letter-spacing:.01em; color:var(--chalk); text-transform:uppercase; text-align:right;
   }
 
@@ -145,13 +145,13 @@
   .ring-fg.urgent{stroke:var(--down);}
   .annun-num{
     position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-    font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:24px; color:var(--brass-bright);
+    font-family:'Oswald', sans-serif; font-weight:700; font-size:24px; color:var(--brass-bright);
   }
 
   .paddle-buttons{flex:1; display:flex; gap:10px;}
   .paddle{
     flex:1; padding:16px 8px; border-radius:7px; border:none;
-    font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:14px;
+    font-family:'Oswald', sans-serif; font-weight:700; font-size:14px;
     letter-spacing:.05em; text-transform:uppercase; cursor:pointer;
     display:flex; flex-direction:column; align-items:center; gap:3px;
     transition:transform .07s ease, filter .12s ease;
@@ -173,7 +173,7 @@
   .action-row{display:flex; gap:10px; margin-bottom:14px;}
   .btn-brass{
     flex:1; background:var(--brass); color:#1A1409; border:none;
-    padding:13px; border-radius:5px; font-family:'Space Grotesk', sans-serif;
+    padding:13px; border-radius:5px; font-family:'Oswald', sans-serif;
     font-weight:700; text-transform:uppercase; letter-spacing:.05em; font-size:12.5px;
     cursor:pointer; transition:background .12s ease;
   }
@@ -197,7 +197,7 @@
   .ticker-result.win{border-left-color:var(--up);}
   .ticker-result.lose{border-left-color:var(--down);}
   .ticker-result .tr-tier{
-    font-family:'Space Grotesk', sans-serif; font-weight:700; text-transform:uppercase;
+    font-family:'Oswald', sans-serif; font-weight:700; text-transform:uppercase;
     letter-spacing:.03em; color:var(--chalk); font-size:12.5px; margin-bottom:4px; display:block;
   }
 
@@ -217,7 +217,7 @@
     padding:9px 10px;
   }
   .guide-item .g-name{
-    font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:11px;
+    font-family:'Oswald', sans-serif; font-weight:700; font-size:11px;
     color:var(--chalk); display:block; margin-bottom:3px;
   }
   .guide-item .g-note{font-size:10px; color:var(--chalk-dim); line-height:1.45;}
@@ -242,7 +242,7 @@
   body{
     min-width:320px;
     background:
-      radial-gradient(ellipse 900px 500px at 15% 0%, rgba(201,162,75,0.12), transparent 58%),
+      radial-gradient(ellipse 900px 500px at 15% 0%, rgba(255,51,51,0.12), transparent 58%),
       radial-gradient(ellipse 800px 480px at 100% 100%, rgba(79,190,104,0.05), transparent 65%),
       var(--bg);
   }
@@ -326,7 +326,7 @@
   .tf-chip.active,.view-chart{
     color:var(--brass-bright);
     border-color:var(--brass-dim);
-    background:rgba(201,162,75,.08);
+    background:rgba(255,51,51,.08);
   }
   .view-chart:hover,.tf-chip:hover{border-color:var(--brass);color:var(--chalk);}
   .scope{margin-bottom:0;border-radius:8px;}
@@ -344,7 +344,7 @@
     border-bottom:1px solid var(--line);
   }
   .control-title strong{
-    font-family:'Space Grotesk',sans-serif;
+    font-family:'Oswald',sans-serif;
     font-size:15px;
     letter-spacing:.04em;
   }
@@ -405,7 +405,7 @@
     <span class="rivet tl"></span><span class="rivet tr"></span>
     <span class="rivet bl"></span><span class="rivet br"></span>
 
-    <div class="board-head">
+    <div class="board-head"><img src="/assets/tkk-logo.png" alt="Trading Ke Khiladi" style="height:46px;width:auto;margin:0 auto 14px;display:block">
       <div class="eyebrow">Trading Ke Khiladi · Gaming Zone</div>
       <h1>Call It.</h1>
       <p class="sub">Study the tape for ten seconds, then slam a paddle before the bell. Speed and accuracy both pay — a wrong call, or no call, costs your stake.</p>
@@ -644,7 +644,7 @@
     if(splitIdx>0 && splitIdx<=candles.length){
       const dx = pad + stepX*splitIdx;
       ctx.setLineDash([3,4]);
-      ctx.strokeStyle = 'rgba(201,162,75,0.55)';
+      ctx.strokeStyle = 'rgba(255,51,51,0.55)';
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.moveTo(dx, pad*0.4); ctx.lineTo(dx, h-pad*0.4);
