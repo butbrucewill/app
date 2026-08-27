@@ -21,7 +21,7 @@ const CONTENT = {
       },
       {
         h: "4. Prizes",
-        p: "A total prize pool of ₹30,00,000 is contested through the event's games and challenges. All scoring is based on simulated trading performance. Final prize distribution is subject to the official event rules shared with selected participants, and to applicable laws including deduction of taxes where required.",
+        p: "The winners of the event take home the ₹30,00,000 prize pool. All scoring is based on simulated trading performance across the week's games and challenges, and the award is subject to the official event rules shared with selected participants, and to applicable laws including deduction of taxes where required.",
       },
       {
         h: "5. Eligibility & Conduct",

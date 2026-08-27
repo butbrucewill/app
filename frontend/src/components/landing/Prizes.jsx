@@ -34,9 +34,9 @@ export const Prizes = () => (
               Total Prize Pool
             </div>
             <p className="mt-5 text-sm leading-relaxed text-white/60">
-              Won entirely through simulated trading performance across the week's
-              games and challenges. Final prize distribution is subject to the
-              official event rules shared with selected participants.
+              Awarded entirely on simulated trading performance across the week's
+              games and challenges — the winners take home the ₹30 lakh prize pool,
+              subject to the official event rules shared with selected participants.
             </p>
           </div>
         </FadeIn>

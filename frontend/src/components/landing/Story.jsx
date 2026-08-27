@@ -21,7 +21,7 @@ export const Story = () => (
           </p>
           <p className="mt-5 text-base leading-relaxed text-white/70 md:text-lg">
             Cameras roll. Mentors push. Teams rise and fall on the leaderboard. At the
-            end, one team walks away with the title — and a share of the ₹30 lakh
+            end, the winners walk away with the title — and take home the ₹30 lakh
             prize pool.
           </p>
         </FadeIn>
