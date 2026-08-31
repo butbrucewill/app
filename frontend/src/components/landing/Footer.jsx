@@ -1,4 +1,13 @@
 import { IMAGES } from "@/constants";
+import { Facebook, Instagram, Linkedin, Twitter, Youtube } from "lucide-react";
+
+const SOCIALS = [
+  { id: "instagram", label: "Instagram", href: "https://www.instagram.com/tradingkekhiladi/", icon: Instagram },
+  { id: "youtube", label: "YouTube", href: "https://www.youtube.com/@TradingkeKhiladii", icon: Youtube },
+  { id: "facebook", label: "Facebook", href: "https://www.facebook.com/profile.php?id=61592192380913", icon: Facebook },
+  { id: "linkedin", label: "LinkedIn", href: "https://www.linkedin.com/in/trading-ke-khiladi-9b759a429/", icon: Linkedin },
+  { id: "x", label: "X (Twitter)", href: "https://x.com/TradingkKhiladi", icon: Twitter },
+];
 
 const LEGAL = [
   { href: "/legal/terms", label: "Terms & Conditions", id: "terms" },
@@ -51,7 +60,26 @@ export const Footer = () => (
         </div>
       </div>
 
-      <div className="mt-12 border-t border-white/5 pt-6 text-xs text-white/30">
+      <div className="mt-12 flex flex-col items-start gap-5 border-t border-white/10 pt-8 sm:flex-row sm:items-center sm:justify-between" data-testid="footer-socials">
+        <p className="font-display text-xs uppercase tracking-[0.25em] text-white/50">Follow the show</p>
+        <div className="flex items-center gap-3">
+          {SOCIALS.map((s) => (
+            <a
+              key={s.id}
+              href={s.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-testid={`social-${s.id}`}
+              aria-label={s.label}
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white/60 transition-all duration-300 hover:-translate-y-1 hover:border-primary hover:bg-primary hover:text-white hover:shadow-lg hover:shadow-primary/30"
+            >
+              <s.icon className="h-5 w-5" strokeWidth={1.8} />
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-8 border-t border-white/5 pt-6 text-xs text-white/30">
         © {new Date().getFullYear()} Trading Ke Khiladi. All rights reserved.
       </div>
     </div>
