@@ -4,7 +4,7 @@ export const API = "/api";
 export const EVENT_DATE = new Date("2026-12-18T10:00:00+05:30");
 
 export const IMAGES = {
-  logo: "/assets/tkk-logo.png",
+  logo: "/assets/TKK.png",
   hero: "/assets/hero-arena.jpg",
   villa1: "/assets/villa-1.webp",
   villa2: "/assets/villa-2.webp",
