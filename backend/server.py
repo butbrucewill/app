@@ -23,6 +23,8 @@ from fastapi.responses import StreamingResponse
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, EmailStr, Field
 from starlette.middleware.cors import CORSMiddleware
+from bson.binary import Binary
+from fastapi import File, UploadFile
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
@@ -365,6 +367,174 @@ async def list_game_scores(admin=Depends(get_current_admin)):
     return {"scores": scores, "total": len(scores)}
 
 
+_IMG_TYPES = {"image/jpeg", "image/png", "image/webp", "image/gif"}
+_MAX_UPLOAD = 5 * 1024 * 1024  # 5 MB
+ 
+ 
+def _slugify(text: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "-", (text or "").lower()).strip("-")[:90]
+ 
+ 
+def _now_iso() -> str:
+    return datetime.now(timezone.utc).isoformat()
+ 
+ 
+class BlogInput(BaseModel):
+    model_config = {"extra": "ignore"}
+ 
+    title: str = Field(min_length=3, max_length=200)
+    h1: str = ""
+    slug: str = ""
+    excerpt: str = Field(default="", max_length=400)
+    category: str = ""
+    tags: str = ""
+    author: str = "Trading Ke Khiladi"
+    published_at: str = ""
+    cover_image: str = ""
+    cover_alt: str = ""
+    meta_title: str = ""
+    meta_description: str = ""
+    focus_keyword: str = ""
+    secondary_keywords: str = ""
+    canonical_url: str = ""
+    index_status: str = "index"
+    schema_type: str = "BlogPosting"
+    og_title: str = ""
+    og_description: str = ""
+    og_image: str = ""
+    content: str = ""
+    status: str = "draft"  # draft | published
+ 
+ 
+class BlogOrderInput(BaseModel):
+    ids: list[str]
+ 
+ 
+async def _ensure_unique_slug(slug: str, exclude_id: str | None = None) -> None:
+    query = {"slug": slug}
+    if exclude_id:
+        query["blog_id"] = {"$ne": exclude_id}
+    if await db.blogs.find_one(query, {"_id": 1}):
+        raise HTTPException(status_code=409, detail="This URL slug is already used by another blog.")
+ 
+ 
+# ----- public -----
+@api_router.get("/blogs")
+async def public_list_blogs():
+    blogs = await (
+        db.blogs.find({"status": "published"}, {"_id": 0, "content": 0})
+        .sort([("sort_order", 1), ("published_at", -1)])
+        .to_list(500)
+    )
+    return {"blogs": blogs}
+ 
+ 
+@api_router.get("/blogs/{slug}")
+async def public_get_blog(slug: str):
+    blog = await db.blogs.find_one({"slug": slug, "status": "published"}, {"_id": 0})
+    if not blog:
+        raise HTTPException(status_code=404, detail="Blog not found")
+    return {"blog": blog}
+ 
+ 
+@api_router.get("/uploads/{file_id}")
+async def get_upload(file_id: str):
+    doc = await db.uploads.find_one({"file_id": file_id}, {"_id": 0})
+    if not doc:
+        raise HTTPException(status_code=404, detail="File not found")
+    return Response(
+        content=bytes(doc["data"]),
+        media_type=doc["content_type"],
+        headers={"Cache-Control": "public, max-age=31536000, immutable"},
+    )
+ 
+ 
+# ----- admin -----
+@api_router.get("/admin/blogs")
+async def admin_list_blogs(admin=Depends(get_current_admin)):
+    blogs = await (
+        db.blogs.find({}, {"_id": 0, "content": 0})
+        .sort([("sort_order", 1), ("created_at", -1)])
+        .to_list(1000)
+    )
+    return {"blogs": blogs}
+ 
+ 
+@api_router.get("/admin/blogs/{blog_id}")
+async def admin_get_blog(blog_id: str, admin=Depends(get_current_admin)):
+    blog = await db.blogs.find_one({"blog_id": blog_id}, {"_id": 0})
+    if not blog:
+        raise HTTPException(status_code=404, detail="Blog not found")
+    return {"blog": blog}
+ 
+ 
+@api_router.post("/admin/blogs", status_code=201)
+async def admin_create_blog(input: BlogInput, admin=Depends(get_current_admin)):
+    data = input.model_dump()
+    data["slug"] = _slugify(data["slug"] or data["title"]) or uuid.uuid4().hex[:8]
+    await _ensure_unique_slug(data["slug"])
+ 
+    now = _now_iso()
+    first = await db.blogs.find_one({}, {"_id": 0, "sort_order": 1}, sort=[("sort_order", 1)])
+    data.update(
+        blog_id=str(uuid.uuid4()),
+        created_at=now,
+        updated_at=now,
+        published_at=data["published_at"] or now[:10],
+        sort_order=(first.get("sort_order", 0) - 1) if first else 0,  # new posts start at #1
+    )
+    await db.blogs.insert_one({**data})
+    return {"blog": data}
+ 
+ 
+@api_router.put("/admin/blogs/{blog_id}")
+async def admin_update_blog(blog_id: str, input: BlogInput, admin=Depends(get_current_admin)):
+    existing = await db.blogs.find_one({"blog_id": blog_id}, {"_id": 0})
+    if not existing:
+        raise HTTPException(status_code=404, detail="Blog not found")
+ 
+    data = input.model_dump()
+    data["slug"] = _slugify(data["slug"] or data["title"]) or existing["slug"]
+    await _ensure_unique_slug(data["slug"], exclude_id=blog_id)
+    data["published_at"] = data["published_at"] or existing.get("published_at") or existing["created_at"][:10]
+    data["updated_at"] = _now_iso()
+ 
+    await db.blogs.update_one({"blog_id": blog_id}, {"$set": data})
+    return {"blog": {**existing, **data}}
+ 
+ 
+@api_router.delete("/admin/blogs/{blog_id}")
+async def admin_delete_blog(blog_id: str, admin=Depends(get_current_admin)):
+    res = await db.blogs.delete_one({"blog_id": blog_id})
+    if res.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Blog not found")
+    return {"status": "deleted"}
+ 
+ 
+@api_router.put("/admin/blogs-order")
+async def admin_reorder_blogs(input: BlogOrderInput, admin=Depends(get_current_admin)):
+    for index, blog_id in enumerate(input.ids):
+        await db.blogs.update_one({"blog_id": blog_id}, {"$set": {"sort_order": index}})
+    return {"status": "ok"}
+ 
+ 
+@api_router.post("/admin/upload")
+async def admin_upload_image(file: UploadFile = File(...), admin=Depends(get_current_admin)):
+    if file.content_type not in _IMG_TYPES:
+        raise HTTPException(status_code=400, detail="Only JPG, PNG, WEBP or GIF images are allowed")
+    raw = await file.read()
+    if len(raw) > _MAX_UPLOAD:
+        raise HTTPException(status_code=400, detail="Image must be under 5 MB")
+    file_id = uuid.uuid4().hex
+    await db.uploads.insert_one({
+        "file_id": file_id,
+        "content_type": file.content_type,
+        "data": Binary(raw),
+        "created_at": _now_iso(),
+    })
+    return {"url": f"/api/uploads/{file_id}"}
+ 
+
 # ---------------- Startup ----------------
 @app.on_event("startup")
 async def startup():
@@ -373,6 +543,11 @@ async def startup():
     await db.applications.create_index("email")
     await db.applications.create_index("created_at")
     await db.game_scores.create_index("player_key", unique=True)
+    await db.blogs.create_index("slug", unique=True)
+    await db.blogs.create_index("blog_id", unique=True)
+    await db.blogs.create_index([("status", 1), ("sort_order", 1)])
+    await db.uploads.create_index("file_id", unique=True)
+
 
     admin_email = os.environ.get("ADMIN_EMAIL", "").lower()
     admin_password = os.environ.get("ADMIN_PASSWORD", "")
