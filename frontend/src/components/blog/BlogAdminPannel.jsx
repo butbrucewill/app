@@ -74,7 +74,7 @@ const Counter = ({ value, max }) => (
 );
 
 /** URL box + "Upload" button (uses POST /api/admin/upload) + preview */
-function ImageInput({ value, onChange, token, placeholder }) {
+function ImageInput({ value, onChange, placeholder }) {
   const fileRef = useRef(null);
   const [busy, setBusy] = useState(false);
 
@@ -86,7 +86,6 @@ function ImageInput({ value, onChange, token, placeholder }) {
       fd.append("file", file);
       const res = await fetch(`${API}/admin/upload`, {
         method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
         body: fd,
       });
       const data = await res.json().catch(() => ({}));
@@ -340,7 +339,7 @@ export default function BlogAdminPanel({ token }) {
 
         <Section title="2 · Featured image">
           <Field label="Image (upload or URL)">
-            <ImageInput value={draft.cover_image} onChange={(v) => set("cover_image", v)} token={token} />
+            <ImageInput value={draft.cover_image} onChange={(v) => set("cover_image", v)} />
           </Field>
           <Field label="Image alt text" hint="Describe the image, e.g. “Stock trading course for beginners”.">
             <input className={inputCls} value={draft.cover_alt} onChange={(e) => set("cover_alt", e.target.value)} />
@@ -393,7 +392,7 @@ export default function BlogAdminPanel({ token }) {
                       onChange={(e) => set("og_description", e.target.value)} />
           </Field>
           <Field label="OG image (1200×630 recommended)">
-            <ImageInput value={draft.og_image} onChange={(v) => set("og_image", v)} token={token} />
+            <ImageInput value={draft.og_image} onChange={(v) => set("og_image", v)} />
           </Field>
         </Section>
 

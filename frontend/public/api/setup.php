@@ -38,6 +38,44 @@ try {
         created_at VARCHAR(40) NOT NULL
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
 
+    $pdo->exec("CREATE TABLE IF NOT EXISTS blogs (
+        blog_id VARCHAR(64) PRIMARY KEY,
+        title VARCHAR(200) NOT NULL,
+        h1 VARCHAR(255) NOT NULL DEFAULT '',
+        slug VARCHAR(120) NOT NULL UNIQUE,
+        excerpt VARCHAR(400) NOT NULL DEFAULT '',
+        category VARCHAR(120) NOT NULL DEFAULT '',
+        tags TEXT NOT NULL,
+        author VARCHAR(120) NOT NULL DEFAULT 'Trading Ke Khiladi',
+        published_at VARCHAR(40) NOT NULL DEFAULT '',
+        cover_image TEXT NOT NULL,
+        cover_alt VARCHAR(255) NOT NULL DEFAULT '',
+        meta_title VARCHAR(255) NOT NULL DEFAULT '',
+        meta_description TEXT NOT NULL,
+        focus_keyword VARCHAR(255) NOT NULL DEFAULT '',
+        secondary_keywords TEXT NOT NULL,
+        canonical_url TEXT NOT NULL,
+        index_status VARCHAR(20) NOT NULL DEFAULT 'index',
+        schema_type VARCHAR(80) NOT NULL DEFAULT 'BlogPosting',
+        og_title VARCHAR(255) NOT NULL DEFAULT '',
+        og_description TEXT NOT NULL,
+        og_image TEXT NOT NULL,
+        content LONGTEXT NOT NULL,
+        faqs LONGTEXT NOT NULL,
+        status VARCHAR(20) NOT NULL DEFAULT 'draft',
+        created_at VARCHAR(40) NOT NULL,
+        updated_at VARCHAR(40) NOT NULL,
+        sort_order INT NOT NULL DEFAULT 0,
+        INDEX(status, sort_order)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+
+    $pdo->exec("CREATE TABLE IF NOT EXISTS blog_uploads (
+        file_id VARCHAR(64) PRIMARY KEY,
+        content_type VARCHAR(80) NOT NULL,
+        data LONGBLOB NOT NULL,
+        created_at VARCHAR(40) NOT NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+
     $stmt = $pdo->prepare("SELECT id FROM admins WHERE email = ?");
     $stmt->execute([ADMIN_EMAIL]);
     if (!$stmt->fetch()) {
