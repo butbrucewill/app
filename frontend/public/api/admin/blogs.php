@@ -1,9 +1,9 @@
 <?php
-require_once __DIR__ . '/auth.php';
-require_once dirname(__DIR__) . '/blog_helpers.php';
-
-require_admin();
 try {
+    require_once __DIR__ . '/auth.php';
+    require_once dirname(__DIR__) . '/blog_helpers.php';
+    require_admin();
+
     $pdo = db();
     $method = $_SERVER['REQUEST_METHOD'];
     $id = trim($_GET['id'] ?? '');
@@ -83,5 +83,12 @@ try {
     json_out(['detail' => 'Method not allowed'], 405);
 } catch (Throwable $error) {
     error_log('Blog API error: ' . $error->getMessage());
-    json_out(['detail' => 'Blog API failed. Check the hosting PHP error log.'], 500);
+    $detail = 'Blog API failed. Check the hosting PHP error log.';
+    if (($_GET['debug'] ?? '') === '1') {
+        $detail .= ' ' . get_class($error) . ': ' . $error->getMessage();
+    }
+    http_response_code(500);
+    header('Content-Type: application/json');
+    echo json_encode(['detail' => $detail]);
+    exit;
 }
