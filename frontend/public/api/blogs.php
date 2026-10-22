@@ -1,6 +1,12 @@
 <?php
 try {
-    require_once __DIR__ . '/blog_helpers.php';
+    require_once __DIR__ . '/db.php';
+
+    function blog_from_row($row) {
+        if (!$row) return null;
+        $row['faqs'] = json_decode($row['faqs'] ?? '[]', true) ?: [];
+        return $row;
+    }
 
     if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
         json_out(['detail' => 'Method not allowed'], 405);
