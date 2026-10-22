@@ -379,6 +379,14 @@ def _now_iso() -> str:
     return datetime.now(timezone.utc).isoformat()
  
  
+class FaqItem(BaseModel):
+    model_config = {"extra": "ignore"}
+ 
+    question: str = Field(default="", max_length=300)
+    answer: str = Field(default="", max_length=3000)
+ 
+ 
+
 class BlogInput(BaseModel):
     model_config = {"extra": "ignore"}
  
@@ -403,6 +411,7 @@ class BlogInput(BaseModel):
     og_description: str = ""
     og_image: str = ""
     content: str = ""
+    faqs: list[FaqItem] = Field(default_factory=list, max_length=30)
     status: str = "draft"  # draft | published
  
  
@@ -417,7 +426,15 @@ async def _ensure_unique_slug(slug: str, exclude_id: str | None = None) -> None:
     if await db.blogs.find_one(query, {"_id": 1}):
         raise HTTPException(status_code=409, detail="This URL slug is already used by another blog.")
  
+def _clean_faqs(faqs: list[dict]) -> list[dict]:
+    """Keep only FAQs that have both a question and an answer."""
+    return [
+        {"question": f["question"].strip(), "answer": f["answer"].strip()}
+        for f in (faqs or [])
+        if f.get("question", "").strip() and f.get("answer", "").strip()
+    ]
  
+
 # ----- public -----
 @api_router.get("/blogs")
 async def public_list_blogs():

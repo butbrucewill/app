@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { useEditor, EditorContent } from "@tiptap/react";
-import { ArrowLeft, Link2 } from "lucide-react";
+import { ArrowLeft, ChevronDown, Link2 } from "lucide-react";
 import { toast } from "sonner";
 import BlogLayout from "@/components/blog/BlogLayout";
 import { getBlogExtensions } from "@/components/blog/BlogExtension";
@@ -23,6 +23,10 @@ const readingTime = (html = "") => {
 
 const absUrl = (u) => (!u ? "" : /^https?:\/\//.test(u) ? u : `${window.location.origin}${u}`);
 
+// Only FAQs that have both a question and an answer are shown.
+const cleanFaqs = (faqs) =>
+  (Array.isArray(faqs) ? faqs : []).filter((f) => f && f.question && f.answer);
+
 // Read-only TipTap: same schema as the admin editor, so images/alignment look the same.
 function BlogContent({ html }) {
   const editor = useEditor({
@@ -32,6 +36,80 @@ function BlogContent({ html }) {
     editorProps: { attributes: { class: "blog-editor-content blog-reader" } },
   });
   return <EditorContent editor={editor} />;
+}
+
+// Click-to-open FAQ list with bullet indicators and improved spacing.
+function BlogFaq({ faqs }) {
+  const [open, setOpen] = useState(null); // index of the open item, or null
+
+  return (
+    <section className="mt-14 border-t border-white/10 pt-10" data-testid="blog-faq">
+      <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.25em] text-primary">FAQ</p>
+      <h2 className="mb-6 font-display text-2xl font-bold uppercase tracking-tight text-white sm:text-3xl">
+        Frequently asked questions
+      </h2>
+
+      <div className="space-y-4">
+        {faqs.map((f, i) => {
+          const isOpen = open === i;
+          return (
+            <div
+              key={i}
+              data-testid={`blog-faq-item-${i}`}
+              className={`border transition-all duration-200 rounded-lg overflow-hidden ${
+                isOpen
+                  ? "border-primary/60 bg-white/[0.04] shadow-lg shadow-primary/5"
+                  : "border-white/10 bg-white/[0.02] hover:border-white/30"
+              }`}
+            >
+              <h3 className="m-0">
+                <button
+                  type="button"
+                  id={`faq-q-${i}`}
+                  aria-expanded={isOpen}
+                  aria-controls={`faq-a-${i}`}
+                  onClick={() => setOpen(isOpen ? null : i)}
+                  className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    {/* Bullet / Accent Indicator */}
+                    <span className={`h-2 w-2 shrink-0 rounded-full transition-colors ${
+                      isOpen ? "bg-primary" : "bg-white/30"
+                    }`} />
+                    <span className="font-display text-base font-semibold leading-snug text-white sm:text-lg">
+                      {f.question}
+                    </span>
+                  </div>
+                  <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 text-primary transition-transform duration-300 ${
+                    isOpen ? "rotate-180 border-primary/40 bg-primary/10" : ""
+                  }`}>
+                    <ChevronDown className="h-4 w-4" />
+                  </div>
+                </button>
+              </h3>
+
+              <div
+                id={`faq-a-${i}`}
+                role="region"
+                aria-labelledby={`faq-q-${i}`}
+                className={`grid transition-[grid-template-rows] duration-300 ease-out ${
+                  isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                }`}
+              >
+                <div className="overflow-hidden">
+                  <div className="border-t border-white/5 px-6 pt-4 pb-6 text-[15px] leading-relaxed text-white/70">
+                    <p className="whitespace-pre-line m-0">
+                      {f.answer}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
 }
 
 // Lightweight SEO: title, meta tags, canonical, JSON-LD (cleaned up when leaving the page).
@@ -76,9 +154,15 @@ function useBlogSeo(blog) {
     document.head.appendChild(canonical);
     added.push(canonical);
 
-    const ld = document.createElement("script");
-    ld.type = "application/ld+json";
-    ld.text = JSON.stringify({
+    const addJsonLd = (obj) => {
+      const el = document.createElement("script");
+      el.type = "application/ld+json";
+      el.text = JSON.stringify(obj);
+      document.head.appendChild(el);
+      added.push(el);
+    };
+
+    addJsonLd({
       "@context": "https://schema.org",
       "@type": blog.schema_type || "BlogPosting",
       mainEntityOfPage: { "@type": "WebPage", "@id": url },
@@ -90,8 +174,20 @@ function useBlogSeo(blog) {
       datePublished: published,
       dateModified: blog.updated_at || published,
     });
-    document.head.appendChild(ld);
-    added.push(ld);
+
+    // FAQ structured data, so Google can show the questions in search results.
+    const faqs = cleanFaqs(blog.faqs);
+    if (faqs.length) {
+      addJsonLd({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faqs.map((f) => ({
+          "@type": "Question",
+          name: f.question,
+          acceptedAnswer: { "@type": "Answer", text: f.answer },
+        })),
+      });
+    }
 
     return () => {
       document.title = prevTitle;
@@ -140,6 +236,7 @@ export default function BlogPostPage() {
       new Date(blog.updated_at) - new Date(published) > 24 * 3600 * 1000,
     [blog, published]
   );
+  const faqs = useMemo(() => cleanFaqs(blog?.faqs), [blog]);
 
   return (
     <BlogLayout>
@@ -186,6 +283,8 @@ export default function BlogPostPage() {
             )}
 
             <BlogContent key={blog.blog_id + blog.updated_at} html={blog.content} />
+
+            {faqs.length > 0 && <BlogFaq faqs={faqs} />}
 
             {blog.tags && (
               <p className="mt-10 flex flex-wrap gap-2">

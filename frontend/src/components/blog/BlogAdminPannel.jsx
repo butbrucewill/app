@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import BlogEditor from "./BlogEditor";
+import { API } from "@/constants";
 
-const API = `${process.env.REACT_APP_BACKEND_URL || ""}/api`;
 const SITE_NAME = "Trading Ke Khiladi";
+const MAX_FAQS = 30;
 
 const todayStr = () => new Date().toISOString().slice(0, 10);
 
@@ -15,7 +16,7 @@ const EMPTY = {
   meta_title: "", meta_description: "", focus_keyword: "", secondary_keywords: "",
   canonical_url: "", index_status: "index", schema_type: "BlogPosting",
   og_title: "", og_description: "", og_image: "",
-  content: "", status: "draft",
+  content: "", faqs: [], status: "draft",
 };
 
 // Turns whatever the API returns (null / "" / missing fields on old posts) into a safe form state.
@@ -27,6 +28,9 @@ const normalize = (b) => {
   out.index_status = b.index_status || "index";
   out.schema_type = b.schema_type || "BlogPosting";
   out.published_at = String(b.published_at || b.created_at || EMPTY.published_at).slice(0, 10);
+  out.faqs = Array.isArray(b.faqs)
+    ? b.faqs.map((f) => ({ question: f?.question || "", answer: f?.answer || "" }))
+    : [];
   return out;
 };
 
@@ -114,6 +118,64 @@ function ImageInput({ value, onChange, token, placeholder }) {
   );
 }
 
+/** Add / edit / reorder / remove question + answer pairs for one blog. */
+function FaqEditor({ faqs, onChange }) {
+  const update = (i, key, value) =>
+    onChange(faqs.map((f, idx) => (idx === i ? { ...f, [key]: value } : f)));
+  const add = () => onChange([...faqs, { question: "", answer: "" }]);
+  const remove = (i) => onChange(faqs.filter((_, idx) => idx !== i));
+  const move = (i, dir) => {
+    const t = i + dir;
+    if (t < 0 || t >= faqs.length) return;
+    const next = [...faqs];
+    [next[i], next[t]] = [next[t], next[i]];
+    onChange(next);
+  };
+
+  return (
+    <div className="space-y-4" data-testid="blog-faq-editor">
+      {faqs.length === 0 && (
+        <p className="text-sm text-white/50">No FAQs yet. Click “Add FAQ” to create the first one.</p>
+      )}
+
+      {faqs.map((f, i) => (
+        <div key={i} className="space-y-3 border border-white/10 bg-black/30 p-4" data-testid={`faq-item-${i}`}>
+          <div className="flex items-center justify-between gap-3">
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary">FAQ #{i + 1}</span>
+            <div className="flex items-center gap-2">
+              <button type="button" title="Move up" aria-label="Move FAQ up" className={iconBtn}
+                      disabled={i === 0} onClick={() => move(i, -1)}>▲</button>
+              <button type="button" title="Move down" aria-label="Move FAQ down" className={iconBtn}
+                      disabled={i === faqs.length - 1} onClick={() => move(i, 1)}>▼</button>
+              <button type="button" onClick={() => remove(i)}
+                      className="h-9 border border-red-500/40 px-3 font-mono text-xs uppercase tracking-widest text-red-400 hover:border-red-400">
+                Remove
+              </button>
+            </div>
+          </div>
+
+          <Field label="Question" counter={<Counter value={f.question} max={300} />}>
+            <input className={inputCls} maxLength={300} placeholder="e.g. Is this course suitable for beginners?"
+                   value={f.question} onChange={(e) => update(i, "question", e.target.value)} />
+          </Field>
+
+          <Field label="Answer" counter={<Counter value={f.answer} max={3000} />}
+                 hint="Plain text. Line breaks are kept on the public page.">
+            <textarea className={inputCls} rows={4} maxLength={3000} placeholder="Write the answer here…"
+                      value={f.answer} onChange={(e) => update(i, "answer", e.target.value)} />
+          </Field>
+        </div>
+      ))}
+
+      <button type="button" onClick={add} disabled={faqs.length >= MAX_FAQS}
+              data-testid="faq-add-btn"
+              className="border border-white/20 px-5 py-2.5 font-mono text-xs uppercase tracking-widest text-white hover:border-primary hover:text-primary disabled:opacity-40 disabled:cursor-not-allowed">
+        + Add FAQ
+      </button>
+    </div>
+  );
+}
+
 /**
  * Use inside your Admin page once logged in:  <BlogAdminPannel token={token} />
  */
@@ -143,7 +205,7 @@ export default function BlogAdminPanel({ token }) {
 
   useEffect(() => { load(); }, [load]);
 
-  const startNew = () => { setSlugTouched(false); setDraft({ ...EMPTY, published_at: todayStr() }); };
+  const startNew = () => { setSlugTouched(false); setDraft({ ...EMPTY, faqs: [], published_at: todayStr() }); };
 
   const edit = async (id) => {
     const res = await fetch(`${API}/admin/blogs/${id}`, { headers });
@@ -161,7 +223,11 @@ export default function BlogAdminPanel({ token }) {
     try {
       // eslint-disable-next-line no-unused-vars
       const { blog_id, updated_at, ...fields } = draft;
-      const body = JSON.stringify({ ...fields, content: html ?? draft.content, status });
+      // Only send FAQs that have both a question and an answer.
+      const faqs = (draft.faqs || [])
+        .map((f) => ({ question: f.question.trim(), answer: f.answer.trim() }))
+        .filter((f) => f.question && f.answer);
+      const body = JSON.stringify({ ...fields, faqs, content: html ?? draft.content, status });
       const res = await fetch(
         draft.blog_id ? `${API}/admin/blogs/${draft.blog_id}` : `${API}/admin/blogs`,
         { method: draft.blog_id ? "PUT" : "POST", headers, body }
@@ -331,7 +397,12 @@ export default function BlogAdminPanel({ token }) {
           </Field>
         </Section>
 
-        <Section title="5 · Content" hint="Use H2/H3 for sections. The title above is the page's H1.">
+        <Section title="5 · FAQ"
+                 hint="Shown as a click-to-open list under the article. Leave empty to hide the FAQ section. Saved together with the post.">
+          <FaqEditor faqs={draft.faqs || []} onChange={(v) => set("faqs", v)} />
+        </Section>
+
+        <Section title="6 · Content" hint="Use H2/H3 for sections. The title above is the page's H1. Post / Save draft below also saves the FAQs.">
           {/* key forces a fresh editor when switching between posts */}
           <BlogEditor
             key={draft.blog_id || "new"}

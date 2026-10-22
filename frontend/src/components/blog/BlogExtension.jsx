@@ -1,11 +1,13 @@
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
 import BlogImage from "./BlogImages";
- 
+
 // One extension list used by BOTH the admin editor and the public reader,
 // so what the admin sees while writing is exactly what visitors see.
 export const getBlogExtensions = ({ editable = true } = {}) => [
-  StarterKit,
+  // TipTap v3's StarterKit already bundles Link, so turn that copy off
+  // and use the configured Link below (avoids the "Duplicate extension names" warning).
+  StarterKit.configure({ link: false }),
   Link.configure({
     openOnClick: !editable,
     autolink: editable,
@@ -26,4 +28,3 @@ export const getBlogExtensions = ({ editable = true } = {}) => [
       : { enabled: false },
   }),
 ];
- 

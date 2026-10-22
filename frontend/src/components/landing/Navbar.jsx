@@ -10,6 +10,7 @@ const LINKS = [
   { href: "#mentors", label: "Mentors" },
   { href: "#villa", label: "The Villa" },
   { href: "#prizes", label: "Prizes" },
+  { href: "/blog", label: "Blog" },
 ];
 
 export const Navbar = () => {
