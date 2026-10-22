@@ -1,6 +1,16 @@
 <?php
 require_once __DIR__ . '/db.php';
 
+function blog_substr($value, $start, $length) {
+    return function_exists('mb_substr')
+        ? mb_substr($value, $start, $length, 'UTF-8')
+        : substr($value, $start, $length);
+}
+
+function blog_strlen($value) {
+    return function_exists('mb_strlen') ? mb_strlen($value, 'UTF-8') : strlen($value);
+}
+
 function blog_fields() {
     return [
         'title', 'h1', 'slug', 'excerpt', 'category', 'tags', 'author',
@@ -42,7 +52,7 @@ function normalize_blog_input($input) {
         $question = trim((string)($faq['question'] ?? ''));
         $answer = trim((string)($faq['answer'] ?? ''));
         if ($question !== '' && $answer !== '') {
-            $faqs[] = ['question' => mb_substr($question, 0, 300), 'answer' => mb_substr($answer, 0, 3000)];
+            $faqs[] = ['question' => blog_substr($question, 0, 300), 'answer' => blog_substr($answer, 0, 3000)];
         }
     }
     $data['faqs'] = json_encode($faqs, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
