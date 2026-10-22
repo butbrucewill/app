@@ -11,12 +11,12 @@
   RewriteRule ^api/auth/logout$ api/admin/logout.php [L]
   RewriteRule ^api/admin/applications/export$ api/admin/export.php [L]
   RewriteRule ^api/admin/applications$ api/admin/applications.php [L]
-  RewriteRule ^api/admin/blogs-order$ api/admin/blogs.php?action=order [QSA,L]
-  RewriteRule ^api/admin/blogs/?$ api/admin/blogs.php [L]
-  RewriteRule ^api/admin/blogs/([^/]+)$ api/admin/blogs.php?id=$1 [QSA,L]
+  RewriteRule ^api/admin/blogs-order$ api/admin/blog.php?action=order [QSA,L]
+  RewriteRule ^api/admin/blogs/?$ api/admin/blog.php [L]
+  RewriteRule ^api/admin/blogs/([^/]+)$ api/admin/blog.php?id=$1 [QSA,L]
   RewriteRule ^api/admin/upload$ api/admin/upload.php [L]
-  RewriteRule ^api/blogs/?$ api/blogs.php [L]
-  RewriteRule ^api/blogs/([^/]+)$ api/blogs.php?slug=$1 [QSA,L]
+  RewriteRule ^api/blogs/?$ api/blog.php [L]
+  RewriteRule ^api/blogs/([^/]+)$ api/blog.php?slug=$1 [QSA,L]
   RewriteRule ^api/uploads/([^/]+)$ api/uploads.php?id=$1 [QSA,L]
 
   # Serve real files and directories directly
