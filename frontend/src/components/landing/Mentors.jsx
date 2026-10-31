@@ -7,7 +7,7 @@ const MENTORS = [
     name: "Rajat Sharma",
     title: "Founding Director",
     desc: "Builds and leads One Stock Academy's trading community, translating market moves into content.",
-    tag: "150K+ on Instagram",
+    tag: "160K+ on Instagram",
     pos: "object-top",
   },
   {
@@ -15,7 +15,7 @@ const MENTORS = [
     name: "Aman Singh Negi",
     title: "Chief Academic Officer",
     desc: "Leads the online cohort experience, known for breaking down price action and market structure for beginners.",
-    tag: "750K+ on Instagram",
+    tag: "1M+ on Instagram",
     pos: "object-center",
   },
   {

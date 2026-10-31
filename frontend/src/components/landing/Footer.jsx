@@ -1,5 +1,6 @@
 import { IMAGES } from "@/constants";
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from "lucide-react";
+import { useLocation } from "react-router-dom";
 
 const SOCIALS = [
   { id: "instagram", label: "Instagram", href: "https://www.instagram.com/tradingkekhiladi/", icon: Instagram },
@@ -16,8 +17,11 @@ const LEGAL = [
   { href: "/legal/refund", label: "Refund & Cancellation", id: "refund" },
 ];
 
-export const Footer = () => (
-  <footer className="border-t border-white/10 bg-black pb-16 pt-14">
+export const Footer = () => {
+  const { pathname } = useLocation();
+
+  return (
+    <footer className="border-t border-white/10 bg-black pb-16 pt-14">
     <div className="mx-auto max-w-7xl px-4 sm:px-6">
       <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
         <div className="max-w-md">
@@ -51,7 +55,7 @@ export const Footer = () => (
         <div>
           <p className="font-display text-xs font-bold uppercase tracking-[0.25em] text-white/50">Apply</p>
           <a
-            href="#apply"
+            href={pathname === "/" ? "#apply" : "/#apply"}
             data-testid="footer-apply-btn"
             className="mt-4 inline-block bg-primary px-6 py-3 font-display text-xs font-bold uppercase tracking-widest text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary/90"
           >
@@ -83,5 +87,6 @@ export const Footer = () => (
         © {new Date().getFullYear()} Trading Ke Khiladi. All rights reserved.
       </div>
     </div>
-  </footer>
-);
+    </footer>
+  );
+};

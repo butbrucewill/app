@@ -4,7 +4,6 @@ import axios from "axios";
 import { useEditor, EditorContent } from "@tiptap/react";
 import { ArrowLeft, ChevronDown, Link2 } from "lucide-react";
 import { toast } from "sonner";
-import BlogLayout from "@/components/blog/BlogLayout";
 import { getBlogExtensions } from "@/components/blog/BlogExtension";
 import { API } from "@/constants";
 
@@ -239,7 +238,7 @@ export default function BlogPostPage() {
   const faqs = useMemo(() => cleanFaqs(blog?.faqs), [blog]);
 
   return (
-    <BlogLayout>
+    <>
       <main className="mx-auto max-w-3xl px-4 pb-16 pt-12 sm:px-6" data-testid="blog-post-page">
         <Link
           to="/blog"
@@ -334,6 +333,6 @@ export default function BlogPostPage() {
           </div>
         </section>
       )}
-    </BlogLayout>
+    </>
   );
 }

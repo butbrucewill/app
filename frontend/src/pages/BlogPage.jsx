@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import BlogLayout from "@/components/blog/BlogLayout";
 import { API } from "@/constants";
 
 const fmtDate = (iso) =>
@@ -20,8 +19,7 @@ export default function BlogPage() {
   }, []);
 
   return (
-    <BlogLayout>
-      <main className="mx-auto max-w-6xl px-4 py-14 sm:px-6" data-testid="blog-list-page">
+    <main className="mx-auto max-w-6xl px-4 py-14 sm:px-6" data-testid="blog-list-page">
         <p className="text-xs font-bold uppercase tracking-[0.25em] text-primary">Learn</p>
         <h1 className="mt-2 font-display text-4xl font-bold uppercase tracking-tight text-white sm:text-5xl">
           Blog
@@ -70,7 +68,6 @@ export default function BlogPage() {
             ))}
           </div>
         )}
-      </main>
-    </BlogLayout>
+    </main>
   );
 }
